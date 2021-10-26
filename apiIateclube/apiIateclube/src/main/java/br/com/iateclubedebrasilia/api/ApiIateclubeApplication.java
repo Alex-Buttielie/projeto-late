@@ -1,0 +1,13 @@
+package br.com.iateclubedebrasilia.api;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ApiIateclubeApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ApiIateclubeApplication.class, args);
+	}
+
+}
