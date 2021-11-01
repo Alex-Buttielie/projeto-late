@@ -1,12 +1,14 @@
-import br.com.iateclubedebrasilia.api.services.MenuPermissoesServices;
+package br.com.iateclubedebrasilia.api.controller;
+
+import br.com.iateclubedebrasilia.api.services.MenusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/menuPermissoesController")
-public class MenuPermissoesController {
+@RequestMapping("/menusController")
+public class MenusController {
 
     @Autowired
-    MenuPermissoesServices menuPermissoesServices;
+    MenusService menusService;
 }

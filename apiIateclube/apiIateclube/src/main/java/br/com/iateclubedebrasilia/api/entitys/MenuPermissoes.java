@@ -17,16 +17,6 @@ public class MenuPermissoes {
     private Integer mpeMenIden;
     private Integer mprGrpIden;
 
-    public MenuPermissoes(Long mpeMen,
-                          Integer mpeMenIden,
-                          Integer mprGrpIden) {
-
-        this.mpeMen = mpeMen;
-        this.mpeMenIden = mpeMenIden;
-        this.mprGrpIden = mprGrpIden;
-
-    }
-
     public Long getMpeMen() {
         return mpeMen;
     }

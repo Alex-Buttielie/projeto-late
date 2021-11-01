@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity
@@ -17,20 +18,7 @@ public class Grupos {
     private String grpNome;
     private String grpDescricao;
     private LocalDate grpDtaHora;
-    private Integer grpUgrIden;
-
-    public Grupos(Integer grpIden,
-                  String grpNome,
-                  String grpDescricao,
-                  LocalDate grpDtaHora,
-                  Integer grpUgrIden) {
-
-        this.grpUgrIden = grpUgrIden;
-        this.grpNome = grpNome;
-        this.grpDescricao = grpDescricao;
-        this.grpDtaHora = grpDtaHora;
-        this.grpIden = grpIden;
-    }
+    private Integer grpUsuIden;
 
     public Integer getGrpIden() {
         return grpIden;
@@ -64,11 +52,11 @@ public class Grupos {
         this.grpDtaHora = grpDtaHora;
     }
 
-    public Integer getGrpUgrIden() {
-        return grpUgrIden;
+    public Integer getGrpUsuIden() {
+        return grpUsuIden;
     }
 
-    public void setGrpUgrIden(Integer grpUgrIden) {
-        this.grpUgrIden = grpUgrIden;
+    public void setGrpUsuIden(Integer grpUsuIden) {
+        this.grpUsuIden = grpUsuIden;
     }
 }

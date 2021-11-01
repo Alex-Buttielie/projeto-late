@@ -18,19 +18,6 @@ public class Permissoes {
     private String perDtaHora;
     private Integer perUsuIden;
 
-    public Permissoes(Integer perIden,
-                      String perDescricao,
-                      String perNome,
-                      String perDtaHora,
-                      Integer perUsuIden) {
-
-        this.perIden = perIden;
-        this.perDescricao = perDescricao;
-        this.perNome = perNome;
-        this.perDtaHora = perDtaHora;
-        this.perUsuIden = perUsuIden;
-    }
-
     public Integer getPerIden() {
         return perIden;
     }

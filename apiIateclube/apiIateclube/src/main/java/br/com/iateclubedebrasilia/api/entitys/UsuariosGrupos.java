@@ -18,17 +18,6 @@ public class UsuariosGrupos {
     private Integer ugrGrpIden;
     private LocalDate ugrDtaHora;
 
-    public UsuariosGrupos(Integer ugrIden,
-                          Integer ugrUsuIden,
-                          Integer ugrGrpIden,
-                          LocalDate ugrDtaHora) {
-
-        this.ugrIden = ugrIden;
-        this.ugrUsuIden = ugrUsuIden;
-        this.ugrGrpIden = ugrGrpIden;
-        this.ugrDtaHora = ugrDtaHora;
-    }
-
     public Integer getUgrIden() {
         return ugrIden;
     }

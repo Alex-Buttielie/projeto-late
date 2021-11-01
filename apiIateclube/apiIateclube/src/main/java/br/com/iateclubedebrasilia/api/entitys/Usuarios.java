@@ -20,21 +20,6 @@ public class Usuarios {
     private LocalDate usuDtaHora;
     private Integer usuUsuIden;
 
-    public Usuarios( Integer usuIden,
-                     String usuLogin,
-                     String usuNome,
-                     String usuSenha,
-                     LocalDate usuDtaHora,
-                     Integer usuUsuIden) {
-
-        this.usuIden = usuIden;
-        this.usuLogin = usuLogin;
-        this.usuNome = usuNome;
-        this.usuSenha = usuSenha;
-        this.usuDtaHora = usuDtaHora;
-        this.usuUsuIden = usuUsuIden;
-    }
-
     public Integer getUsuIden() {
         return usuIden;
     }
@@ -82,4 +67,7 @@ public class Usuarios {
     public void setUsuUsuIden(Integer usuUsuIden) {
         this.usuUsuIden = usuUsuIden;
     }
+
+
+
 }

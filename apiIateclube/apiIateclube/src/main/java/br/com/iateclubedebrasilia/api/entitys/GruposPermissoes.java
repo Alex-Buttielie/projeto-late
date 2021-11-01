@@ -16,15 +16,6 @@ public class GruposPermissoes {
     private Integer grpIden;
     private Integer grpPerIden;
 
-    public GruposPermissoes(Integer gpIden,
-                            Integer grpIden,
-                            Integer grpPerIden) {
-
-        this.gpIden = gpIden;
-        this.grpIden = grpIden;
-        this.grpPerIden = grpPerIden;
-    }
-
     public Integer getGpIden() {
         return gpIden;
     }

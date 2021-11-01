@@ -25,27 +25,6 @@ public class Menus {
     private LocalDate menDtaHora;
     private Integer menUsuIden;
 
-    public Menus(Integer menIden,
-                 String menDescricao,
-                 String menIcone,
-                 Integer menOrdemMenu,
-                 String menUrl,
-                 Integer menNivel,
-                 Integer menMenIden,
-                 LocalDate menDtaHora,
-                 Integer menUsuIden) {
-
-        this.menIden = menIden;
-        this.menDescricao = menDescricao;
-        this.menIcone = menIcone;
-        this.menOrdemMenu = menOrdemMenu;
-        this.menUrl = menUrl;
-        this.menNivel = menNivel;
-        this.menMenIden = menMenIden;
-        this.menDtaHora = menDtaHora;
-        this.menUsuIden = menUsuIden;
-    }
-
     public Integer getMenIden() {
         return menIden;
     }
