@@ -1,5 +1,9 @@
 package br.com.iateclubedebrasilia.api.entitys;
 
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +21,7 @@ public class Grupos {
     private Integer grpIden;
     private String grpNome;
     private String grpDescricao;
+    @CreationTimestamp
     private LocalDate grpDtaHora;
     private Integer grpUsuIden;
 

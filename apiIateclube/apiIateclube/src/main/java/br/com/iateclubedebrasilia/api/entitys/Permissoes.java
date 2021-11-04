@@ -1,10 +1,13 @@
 package br.com.iateclubedebrasilia.api.entitys;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "PERMISSOES")
@@ -15,7 +18,8 @@ public class Permissoes {
     private Integer perIden;
     private String perDescricao;
     private String perNome;
-    private String perDtaHora;
+    @CreationTimestamp
+    private LocalDate perDtaHora;
     private Integer perUsuIden;
 
     public Integer getPerIden() {
@@ -42,11 +46,11 @@ public class Permissoes {
         this.perNome = perNome;
     }
 
-    public String getPerDtaHora() {
+    public LocalDate getPerDtaHora() {
         return perDtaHora;
     }
 
-    public void setPerDtaHora(String perDtaHora) {
+    public void setPerDtaHora(LocalDate perDtaHora) {
         this.perDtaHora = perDtaHora;
     }
 

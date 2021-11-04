@@ -1,5 +1,7 @@
 package br.com.iateclubedebrasilia.api.entitys;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,7 @@ public class Usuarios {
     private String usuLogin;
     private String usuNome;
     private String usuSenha;
+    @CreationTimestamp
     private LocalDate usuDtaHora;
     private Integer usuUsuIden;
 

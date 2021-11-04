@@ -1,5 +1,6 @@
 package br.com.iateclubedebrasilia.api.entitys;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ public class Menus {
     private String menUrl;
     private Integer menNivel;
     private Integer menMenIden;
+    @CreationTimestamp
     private LocalDate menDtaHora;
     private Integer menUsuIden;
 
