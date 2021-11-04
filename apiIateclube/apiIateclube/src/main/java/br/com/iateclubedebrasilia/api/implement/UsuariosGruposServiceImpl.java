@@ -23,9 +23,9 @@ public class UsuariosGruposServiceImpl implements UsuariosGruposService {
     public ResponseEntity<Map<String, UsuariosGrupos>> salvar(UsuariosGrupos usuariosGrupos) {
         return Optional
                 .ofNullable(usuariosGruposRepository.save(usuariosGrupos))
-                .map(UsuariosGruposSalvos->{
+                .map(usuariosGruposSalvos->{
                     Map<String, UsuariosGrupos> resposta =  new HashMap<>();
-                    resposta.put("Registro salvo", usuariosGrupos);
+                    resposta.put("Registro salvo", usuariosGruposSalvos);
                     return  ResponseEntity.ok(resposta);
                 }).orElseThrow(()-> new NullPointerException( "Não foi possível realizar o cadastro!"));
     }

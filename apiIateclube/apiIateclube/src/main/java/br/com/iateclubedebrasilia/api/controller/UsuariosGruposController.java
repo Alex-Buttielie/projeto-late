@@ -24,13 +24,13 @@ public class UsuariosGruposController {
     UsuariosGruposService usuariosGruposService;
 
 
-    @PostMapping("/salvarGrupo")
+    @PostMapping("/salvarUsuariosGrupo")
     public ResponseEntity<Map<String, UsuariosGrupos>> salvar(@RequestBody UsuariosGrupos usuariosGrupos) {
         return usuariosGruposService.salvar(usuariosGrupos);
     }
 
-    @GetMapping("/pesquisarGrupos")
-    public List<UsuariosGrupos> pesquisarGrupos(){
+    @GetMapping("/pesquisarUsuariosGrupos")
+    public List<UsuariosGrupos> pesquisarUsuariosGrupos(){
         return usuariosGruposService.listar();
     }
 
