@@ -1,7 +1,5 @@
 package br.com.iateclubedebrasilia.api.services;
 
-
-import br.com.iateclubedebrasilia.api.entitys.Grupos;
 import br.com.iateclubedebrasilia.api.entitys.GruposPermissoes;
 import org.springframework.http.ResponseEntity;
 

@@ -39,7 +39,7 @@ public class GruposServiceImpl implements GruposService {
     public List<Grupos> listar(){
         return Optional
                 .ofNullable(gruposRepository.findAll())
-                .orElseThrow(() -> new NullPointerException("Não Exitem Grupos cadastrados"));
+                .orElseThrow(() -> new NullPointerException("Não exitem grupos cadastrados"));
     }
 
     @Override
