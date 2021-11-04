@@ -29,7 +29,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception{
-        web.ignoring().antMatchers("/gruposController/**");
+        web.ignoring()
+                .antMatchers("/gruposController/**")
+                .antMatchers("/gruposPermissoesController/**")
+                .antMatchers("/permissoesController/**")
+                .antMatchers("/usuariosController/**")
+                .antMatchers("/usuariosGruposController/**")
+                .antMatchers("/menusController/**")
+                .antMatchers("/menuPermissoesController/**");
     }
 
 }

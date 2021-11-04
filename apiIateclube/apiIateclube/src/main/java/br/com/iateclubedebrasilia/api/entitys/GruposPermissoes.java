@@ -13,8 +13,8 @@ public class GruposPermissoes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer gpIden;
-    private Integer grpIden;
-    private Integer grpPerIden;
+    private Integer gpeGrpIden;
+    private Integer gpePerIden;
 
     public Integer getGpIden() {
         return gpIden;
@@ -24,19 +24,19 @@ public class GruposPermissoes {
         this.gpIden = gpIden;
     }
 
-    public Integer getGrpIden() {
-        return grpIden;
+    public Integer getGpeGrpIden() {
+        return gpeGrpIden;
     }
 
-    public void setGrpIden(Integer grpIden) {
-        this.grpIden = grpIden;
+    public void setGpeGrpIden(Integer gpeGrpIden) {
+        this.gpeGrpIden = gpeGrpIden;
     }
 
-    public Integer getGrpPerIden() {
-        return grpPerIden;
+    public Integer getGpePerIden() {
+        return gpePerIden;
     }
 
-    public void setGrpPerIden(Integer grpPerIden) {
-        this.grpPerIden = grpPerIden;
+    public void setGpePerIden(Integer gpePerIden) {
+        this.gpePerIden = gpePerIden;
     }
 }

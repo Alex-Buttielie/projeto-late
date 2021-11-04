@@ -13,16 +13,16 @@ public class MenuPermissoes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mpeMen;
+    private Integer mpeInde;
     private Integer mpeMenIden;
-    private Integer mprGrpIden;
+    private Integer mpePerIden;
 
-    public Long getMpeMen() {
-        return mpeMen;
+    public Integer getMpeInde() {
+        return mpeInde;
     }
 
-    public void setMpeMen(Long mpeMen) {
-        this.mpeMen = mpeMen;
+    public void setMpeInde(Integer mpeInde) {
+        this.mpeInde = mpeInde;
     }
 
     public Integer getMpeMenIden() {
@@ -33,12 +33,12 @@ public class MenuPermissoes {
         this.mpeMenIden = mpeMenIden;
     }
 
-    public Integer getMprGrpIden() {
-        return mprGrpIden;
+    public Integer getMpePerIden() {
+        return mpePerIden;
     }
 
-    public void setMprGrpIden(Integer mprGrpIden) {
-        this.mprGrpIden = mprGrpIden;
+    public void setMpePerIden(Integer mpePerIden) {
+        this.mpePerIden = mpePerIden;
     }
 }
 

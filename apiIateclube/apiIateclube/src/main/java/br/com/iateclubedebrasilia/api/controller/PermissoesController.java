@@ -24,7 +24,7 @@ public class PermissoesController {
     private PermissoesService permissoesService;
 
 
-    @PostMapping("/salvarGrupo")
+    @PostMapping("/salvarPermissao")
     public ResponseEntity<Map<String, Permissoes>> salvar(@RequestBody Permissoes permissoes) {
         return permissoesService.salvar(permissoes);
     }

@@ -60,7 +60,7 @@ public class GruposPermissoesServiceImpl implements GruposPermissoesService {
         return Optional
                 .ofNullable(gruposPermissoesRepository.findById(id).orElse(null))
                 .map(grupoPermissoesConsultado-> {
-                    gruposPermissoes.setGrpPerIden(grupoPermissoesConsultado.getGrpPerIden());
+                    gruposPermissoes.setGpIden(grupoPermissoesConsultado.getGpIden());
                     return gruposPermissoesRepository.save(gruposPermissoes);
                 }).orElseThrow(()-> new NullPointerException("Não foi possível realizar a alteração"));
     }

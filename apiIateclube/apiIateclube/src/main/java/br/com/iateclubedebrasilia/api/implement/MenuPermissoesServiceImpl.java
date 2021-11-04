@@ -58,7 +58,7 @@ public class MenuPermissoesServiceImpl implements MenuPermissoesService {
         return Optional
                 .ofNullable(menuPermissoesRepository.findById(id).orElse(null))
                 .map(menuPermissoesConsultado-> {
-                    menuPermissoes.setMpeMen(menuPermissoesConsultado.getMpeMen());
+                    menuPermissoes.setMpeInde(menuPermissoesConsultado.getMpeInde());
                     return menuPermissoesRepository.save(menuPermissoes);
                 }).orElseThrow(()-> new NullPointerException("Não foi possível realizar a alteração"));
     }
