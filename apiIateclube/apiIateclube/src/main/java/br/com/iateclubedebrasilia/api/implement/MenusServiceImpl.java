@@ -1,6 +1,6 @@
 package br.com.iateclubedebrasilia.api.implement;
 
-import br.com.iateclubedebrasilia.api.entitys.Menus;
+import br.com.iateclubedebrasilia.api.entitys.Menu;
 import br.com.iateclubedebrasilia.api.repositorys.MenusRepository;
 import br.com.iateclubedebrasilia.api.services.MenusService;
 import br.com.iateclubedebrasilia.api.util.Util;
@@ -20,33 +20,33 @@ public class MenusServiceImpl implements MenusService {
     private MenusRepository menusRepository;
 
     @Override
-    public ResponseEntity<Map<String, Menus>> salvar(Menus menu) {
+    public ResponseEntity<Map<String, Menu>> salvar(Menu menu) {
         return Optional
                 .ofNullable(menusRepository.save(menu))
                 .map(menuSalvo->{
-                    Map<String, Menus> resposta =  new HashMap<>();
+                    Map<String, Menu> resposta =  new HashMap<>();
                     resposta.put("Registro salvo", menuSalvo);
                     return  ResponseEntity.ok(resposta);
-                }).orElseThrow(()-> new NullPointerException( "Não foi possível realizar o cadastro!"));
+                }).orElseThrow(()-> new NullPointerException( "Nï¿½o foi possï¿½vel realizar o cadastro!"));
     }
 
     @Override
-    public List<Menus> listar() {
+    public List<Menu> listar() {
         return Optional
                 .ofNullable(menusRepository.findAll())
-                .orElseThrow(() -> new NullPointerException("Não exitem menus cadastrados"));
+                .orElseThrow(() -> new NullPointerException("Nï¿½o exitem menus cadastrados"));
     }
 
     @Override
-    public Menus pesquisarMenu(Integer id) {
+    public Menu pesquisarMenu(Integer id) {
         return Optional
                 .ofNullable(id)
                 .map(idConsultado->menusRepository.findById(idConsultado).orElse(null))
-                .orElseThrow(() -> new NullPointerException("Menu não encontrado"));
+                .orElseThrow(() -> new NullPointerException("Menu nï¿½o encontrado"));
     }
 
     @Override
-    public List<Menus> alterarMenus(List<Menus> menus) {
+    public List<Menu> alterarMenus(List<Menu> menus) {
         return Optional
                 .ofNullable(Util.isListaObjVazia(menus))
                 .map(listaValidada-> menusRepository.saveAll(menus))
@@ -54,13 +54,13 @@ public class MenusServiceImpl implements MenusService {
     }
 
     @Override
-    public Menus alterarMenus(Menus menu, Integer id) {
+    public Menu alterarMenus(Menu menu, Integer id) {
         return Optional
                 .ofNullable(menusRepository.findById(id).orElse(null))
                 .map(menuConsultado-> {
                     menu.setMenIden(menuConsultado.getMenIden());
                     return menusRepository.save(menu);
-                }).orElseThrow(()-> new NullPointerException("Não foi possível realizar a alteração"));
+                }).orElseThrow(()-> new NullPointerException("Nï¿½o foi possï¿½vel realizar a alteraï¿½ï¿½o"));
     }
 
     @Override
@@ -69,7 +69,7 @@ public class MenusServiceImpl implements MenusService {
                 .ofNullable(menusRepository.findById(id).orElse(null))
                 .map(menuConsultado-> {
                     menusRepository.delete(menuConsultado);
-                    return ResponseEntity.ok("Registro excluído");
-                }).orElseThrow(()-> new NullPointerException("Menu não encontrado para exclusão"));
+                    return ResponseEntity.ok("Registro excluï¿½do");
+                }).orElseThrow(()-> new NullPointerException("Menu nï¿½o encontrado para exclusï¿½o"));
     }
 }

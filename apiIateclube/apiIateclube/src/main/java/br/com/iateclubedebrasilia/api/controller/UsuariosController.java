@@ -1,7 +1,6 @@
 package br.com.iateclubedebrasilia.api.controller;
 
-import br.com.iateclubedebrasilia.api.entitys.Usuarios;
-import br.com.iateclubedebrasilia.api.entitys.Usuarios;
+import br.com.iateclubedebrasilia.api.entitys.Usuario;
 import br.com.iateclubedebrasilia.api.services.UsuariosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,27 +25,28 @@ public class UsuariosController {
 
 
     @PostMapping("/salvarUsuario")
-    public ResponseEntity<Map<String, Usuarios>> salvar(@RequestBody Usuarios usuario) {
+    public ResponseEntity<Map<String, Usuario>> salvar(@RequestBody Usuario usuario) {
         return usuariosService.salvar(usuario);
     }
 
     @GetMapping("/pesquisarUsuarios")
-    public List<Usuarios> pesquisarUsuarios(){
-        return usuariosService.listar();
+    public ResponseEntity<List<Usuario>> pesquisarUsuarios(){
+        List<Usuario> listaUsuarios = usuariosService.listar();
+        return ResponseEntity.ok().body(listaUsuarios);
     }
 
     @GetMapping("/pesquisarUsuario/{id}")
-    public Usuarios pesquisarUsuario(@PathVariable Integer id){
+    public Usuario pesquisarUsuario(@PathVariable Integer id){
         return usuariosService.pesquisarUsuario(id);
     }
 
     @PutMapping("/alterarUsuarios")
-    public List<Usuarios> alterarUsuarios(@RequestBody List<Usuarios> listaDeUsuarios){
+    public List<Usuario> alterarUsuarios(@RequestBody List<Usuario> listaDeUsuarios){
         return usuariosService.alterarUsuarios(listaDeUsuarios);
     }
 
     @PutMapping("/alterarUsuario/{id}")
-    public  Usuarios alterarUsuario (@RequestBody Usuarios Usuario, @PathVariable Integer id) {
+    public Usuario alterarUsuario (@RequestBody Usuario Usuario, @PathVariable Integer id) {
         return usuariosService.alterarUsuario(Usuario, id);
     }
 

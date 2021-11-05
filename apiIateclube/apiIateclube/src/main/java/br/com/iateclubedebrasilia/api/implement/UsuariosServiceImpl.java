@@ -1,7 +1,7 @@
 package br.com.iateclubedebrasilia.api.implement;
 
-import br.com.iateclubedebrasilia.api.entitys.Usuarios;
-import br.com.iateclubedebrasilia.api.repositorys.UsuariosRepository;
+import br.com.iateclubedebrasilia.api.entitys.Usuario;
+import br.com.iateclubedebrasilia.api.repositorys.UsuarioRepository;
 import br.com.iateclubedebrasilia.api.services.UsuariosService;
 import br.com.iateclubedebrasilia.api.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,60 +17,60 @@ import java.util.Optional;
 public class UsuariosServiceImpl implements UsuariosService {
 
     @Autowired
-    private UsuariosRepository usuariosRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Override
-    public ResponseEntity salvar(Usuarios usuario) {
+    public ResponseEntity salvar(Usuario usuario) {
         return Optional
-                .ofNullable(usuariosRepository.save(usuario))
-                .map(Usuariosalvo->{
-                    Map<String, Usuarios> resposta =  new HashMap<>();
-                    resposta.put("Registro salvo", Usuariosalvo);
+                .ofNullable(usuarioRepository.save(usuario))
+                .map(usuariosalvo ->{
+                    Map<String, Usuario> resposta =  new HashMap<>();
+                    resposta.put("Registro salvo", usuariosalvo);
                     return  ResponseEntity.ok(resposta);
-                }).orElseThrow(()-> new NullPointerException( "Não foi possível realizar o cadastro!"));
+                }).orElseThrow(()-> new NullPointerException( "Nï¿½o foi possï¿½vel realizar o cadastro!"));
     }
 
     @Override
-    public List<Usuarios> listar(){
+    public List<Usuario> listar(){
         return Optional
-                .ofNullable(usuariosRepository.findAll())
-                .orElseThrow(() -> new NullPointerException("Não exitem Usuarios cadastrados"));
+                .ofNullable(usuarioRepository.findAll())
+                .orElseThrow(() -> new NullPointerException("Nï¿½o exitem Usuarios cadastrados"));
     }
 
     @Override
-    public Usuarios pesquisarUsuario(Integer id) {
+    public Usuario pesquisarUsuario(Integer id) {
         return Optional
                 .ofNullable(id)
-                .map(idConsultado->usuariosRepository.findById(idConsultado).orElse(null))
-                .orElseThrow(() -> new NullPointerException("Usuario não encontrado"));
+                .map(idConsultado-> usuarioRepository.findById(idConsultado).orElse(null))
+                .orElseThrow(() -> new NullPointerException("Usuario nï¿½o encontrado"));
     }
 
     @Override
     public ResponseEntity deletarUsuario(Integer id) {
         return Optional
-                .ofNullable(usuariosRepository.findById(id).orElse(null))
+                .ofNullable(usuarioRepository.findById(id).orElse(null))
                 .map(usuarioConsultado-> {
-                    usuariosRepository.delete(usuarioConsultado);
-                    return ResponseEntity.ok("Registro excluído");
-                }).orElseThrow(()-> new NullPointerException("Usuario não encontrado para exclusão"));
+                    usuarioRepository.delete(usuarioConsultado);
+                    return ResponseEntity.ok("Registro excluï¿½do");
+                }).orElseThrow(()-> new NullPointerException("Usuario nï¿½o encontrado para exclusï¿½o"));
     }
 
     @Override
-    public List<Usuarios> alterarUsuarios(List<Usuarios> listaDeUsuarios) {
+    public List<Usuario> alterarUsuarios(List<Usuario> listaDeUsuarios) {
         return Optional
                 .ofNullable(Util.isListaObjVazia(listaDeUsuarios))
-                .map(listaValidada-> usuariosRepository.saveAll(listaDeUsuarios))
+                .map(listaValidada-> usuarioRepository.saveAll(listaDeUsuarios))
                 .orElseThrow(()-> new NullPointerException("Informe pelo menos um usuario para ser alterado"));
     }
 
     @Override
-    public Usuarios alterarUsuario(Usuarios usuario, Integer id){
+    public Usuario alterarUsuario(Usuario usuario, Integer id){
         return Optional
-                .ofNullable(usuariosRepository.findById(id).orElse(null))
+                .ofNullable(usuarioRepository.findById(id).orElse(null))
                 .map(usuarioConsultado-> {
                     usuario.setUsuIden(usuarioConsultado.getUsuIden());
-                    return usuariosRepository.save(usuario);
-                }).orElseThrow(()-> new NullPointerException("Não foi possível realizar a alteração"));
+                    return usuarioRepository.save(usuario);
+                }).orElseThrow(()-> new NullPointerException("Nï¿½o foi possï¿½vel realizar a alteraï¿½ï¿½o"));
 
     }
 }

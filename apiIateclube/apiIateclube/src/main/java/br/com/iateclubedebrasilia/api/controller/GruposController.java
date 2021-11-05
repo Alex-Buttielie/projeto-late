@@ -1,6 +1,6 @@
 package br.com.iateclubedebrasilia.api.controller;
 
-import br.com.iateclubedebrasilia.api.entitys.Grupos;
+import br.com.iateclubedebrasilia.api.entitys.Grupo;
 import br.com.iateclubedebrasilia.api.services.GruposService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,27 +24,27 @@ public class GruposController{
     private GruposService gruposService;
 
     @PostMapping("/salvarGrupo")
-    public ResponseEntity<Map<String, Grupos>> salvar(@RequestBody Grupos grupo) {
+    public ResponseEntity<Map<String, Grupo>> salvar(@RequestBody Grupo grupo) {
         return gruposService.salvar(grupo);
     }
 
     @GetMapping("/pesquisarGrupos")
-    public List<Grupos> pesquisarGrupos(){
+    public List<Grupo> pesquisarGrupos(){
         return gruposService.listar();
     }
 
     @GetMapping("/pesquisarGrupo/{id}")
-    public Grupos pesquisarGrupo(@PathVariable Integer id){
+    public Grupo pesquisarGrupo(@PathVariable Integer id){
         return gruposService.pesquisarGrupo(id);
     }
 
     @PutMapping("/alterarGrupos")
-    public List<Grupos> alterarGrupos(@RequestBody List<Grupos> listaDeGrupos){
+    public List<Grupo> alterarGrupos(@RequestBody List<Grupo> listaDeGrupos){
         return gruposService.alterarGrupos(listaDeGrupos);
     }
 
     @PutMapping("/alterarGrupo/{id}")
-    public  Grupos alterarGrupo (@RequestBody Grupos grupo, @PathVariable Integer id) {
+    public Grupo alterarGrupo (@RequestBody Grupo grupo, @PathVariable Integer id) {
         return gruposService.alterarGrupo(grupo, id);
     }
 

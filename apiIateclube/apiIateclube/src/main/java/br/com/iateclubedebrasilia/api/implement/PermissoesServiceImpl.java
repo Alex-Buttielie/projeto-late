@@ -1,6 +1,6 @@
 package br.com.iateclubedebrasilia.api.implement;
 
-import br.com.iateclubedebrasilia.api.entitys.Permissoes;
+import br.com.iateclubedebrasilia.api.entitys.Permissao;
 import br.com.iateclubedebrasilia.api.repositorys.PermissoesRepository;
 import br.com.iateclubedebrasilia.api.services.PermissoesService;
 import br.com.iateclubedebrasilia.api.util.Util;
@@ -20,56 +20,56 @@ public class PermissoesServiceImpl implements PermissoesService {
     private PermissoesRepository permissoesRepository;
 
     @Override
-    public ResponseEntity<Map<String, Permissoes>> salvar(Permissoes permissoes) {
+    public ResponseEntity<Map<String, Permissao>> salvar(Permissao permissao) {
         return Optional
-                .ofNullable(permissoesRepository.save(permissoes))
-                .map(permissoesSalvas->{
-                    Map<String, Permissoes> resposta =  new HashMap<>();
-                    resposta.put("Registro salvo", permissoesSalvas);
+                .ofNullable(permissoesRepository.save(permissao))
+                .map(permissaoSalvas ->{
+                    Map<String, Permissao> resposta =  new HashMap<>();
+                    resposta.put("Registro salvo", permissaoSalvas);
                     return  ResponseEntity.ok(resposta);
-                }).orElseThrow(()-> new NullPointerException( "Não foi possível realizar o cadastro!"));
+                }).orElseThrow(()-> new NullPointerException( "Nï¿½o foi possï¿½vel realizar o cadastro!"));
     }
 
     @Override
-    public List<Permissoes> listar() {
+    public List<Permissao> listar() {
         return Optional
                 .ofNullable(permissoesRepository.findAll())
-                .orElseThrow(() -> new NullPointerException("Não exitem permissões cadastrados"));
+                .orElseThrow(() -> new NullPointerException("Nï¿½o exitem permissï¿½es cadastrados"));
     }
 
     @Override
-    public Permissoes pesquisarPermissao(Integer id) {
+    public Permissao pesquisarPermissao(Integer id) {
         return Optional
                 .ofNullable(id)
                 .map(idConsultado->permissoesRepository.findById(idConsultado).orElse(null))
-                .orElseThrow(() -> new NullPointerException("Permissões não encontradas"));
+                .orElseThrow(() -> new NullPointerException("Permissï¿½es nï¿½o encontradas"));
     }
 
     @Override
-    public List<Permissoes> alterarPermissoes(List<Permissoes> listaDePermissoes) {
+    public List<Permissao> alterarPermissoes(List<Permissao> listaDePermissoes) {
         return Optional
                 .ofNullable(Util.isListaObjVazia(listaDePermissoes))
                 .map(listaValidada-> permissoesRepository.saveAll(listaDePermissoes))
-                .orElseThrow(()-> new NullPointerException("Informe pelo menos uma permissão para ser alterar"));
+                .orElseThrow(()-> new NullPointerException("Informe pelo menos uma permissï¿½o para ser alterar"));
     }
 
     @Override
-    public Permissoes alterarPermissao(Permissoes permissoes, Integer id) {
+    public Permissao alterarPermissao(Permissao permissao, Integer id) {
         return Optional
                 .ofNullable(permissoesRepository.findById(id).orElse(null))
                 .map(permissaoConsultada-> {
-                    permissoes.setPerIden(permissaoConsultada.getPerIden());
-                    return permissoesRepository.save(permissoes);
-                }).orElseThrow(()-> new NullPointerException("Não foi possível realizar a alteração"));
+                    permissao.setPerIden(permissaoConsultada.getPerIden());
+                    return permissoesRepository.save(permissao);
+                }).orElseThrow(()-> new NullPointerException("Nï¿½o foi possï¿½vel realizar a alteraï¿½ï¿½o"));
     }
 
     @Override
     public ResponseEntity deletarPermissao(Integer id) {
         return Optional
                 .ofNullable(permissoesRepository.findById(id).orElse(null))
-                .map(PermissoesConsultadas-> {
-                    permissoesRepository.delete(PermissoesConsultadas);
-                    return ResponseEntity.ok("Registro excluído");
-                }).orElseThrow(()-> new NullPointerException("Permissão não encontrada para exclusão"));
+                .map(permissaoConsultadas -> {
+                    permissoesRepository.delete(permissaoConsultadas);
+                    return ResponseEntity.ok("Registro excluï¿½do");
+                }).orElseThrow(()-> new NullPointerException("Permissï¿½o nï¿½o encontrada para exclusï¿½o"));
     }
 }
