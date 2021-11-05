@@ -1,6 +1,6 @@
 package br.com.iateclubedebrasilia.api.implement;
 
-import br.com.iateclubedebrasilia.api.entitys.Grupos;
+import br.com.iateclubedebrasilia.api.entitys.Grupo;
 import br.com.iateclubedebrasilia.api.repositorys.GruposRepository;
 import br.com.iateclubedebrasilia.api.services.GruposService;
 import br.com.iateclubedebrasilia.api.util.Util;
@@ -25,25 +25,25 @@ public class GruposServiceImpl implements GruposService {
     }
 
     @Override
-    public ResponseEntity salvar(Grupos grupo) {
+    public ResponseEntity salvar(Grupo grupo) {
         return Optional
                 .ofNullable(gruposRepository.save(grupo))
                 .map(grupoSalvo->{
-                    Map<String, Grupos> resposta =  new HashMap<>();
+                    Map<String, Grupo> resposta =  new HashMap<>();
                     resposta.put("Registro salvo", grupoSalvo);
                     return  ResponseEntity.ok(resposta);
                 }).orElseThrow(()-> new NullPointerException( "Não foi possível realizar o cadastro!"));
     }
 
     @Override
-    public List<Grupos> listar(){
+    public List<Grupo> listar(){
         return Optional
                 .ofNullable(gruposRepository.findAll())
                 .orElseThrow(() -> new NullPointerException("Não exitem grupos cadastrados"));
     }
 
     @Override
-    public Grupos pesquisarGrupo(Integer id) {
+    public Grupo pesquisarGrupo(Integer id) {
         return Optional
                 .ofNullable(id)
                 .map(idConsultado->gruposRepository.findById(idConsultado).orElse(null))
@@ -61,7 +61,7 @@ public class GruposServiceImpl implements GruposService {
     }
 
     @Override
-    public List<Grupos> alterarGrupos(List<Grupos> listaDeGrupos) {
+    public List<Grupo> alterarGrupos(List<Grupo> listaDeGrupos) {
         return Optional
                 .ofNullable(Util.isListaObjVazia(listaDeGrupos))
                 .map(listaValidada-> gruposRepository.saveAll(listaDeGrupos))
@@ -69,7 +69,7 @@ public class GruposServiceImpl implements GruposService {
     }
 
     @Override
-    public Grupos alterarGrupo(Grupos grupo, Integer id){
+    public Grupo alterarGrupo(Grupo grupo, Integer id){
         return Optional
                 .ofNullable(gruposRepository.findById(id).orElse(null))
                 .map(grupoConsultado-> {

@@ -1,6 +1,6 @@
 package br.com.iateclubedebrasilia.api.controller;
 
-import br.com.iateclubedebrasilia.api.entitys.Menus;
+import br.com.iateclubedebrasilia.api.entitys.Menu;
 import br.com.iateclubedebrasilia.api.services.MenusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,28 +25,28 @@ public class MenusController {
 
 
     @PostMapping("/salvarMenus")
-    public ResponseEntity<Map<String, Menus>> salvar(@RequestBody Menus menu) {
+    public ResponseEntity<Map<String, Menu>> salvar(@RequestBody Menu menu) {
         return menuService.salvar(menu);
     }
 
     @GetMapping("/pesquisarMenus")
-    public List<Menus> pesquisarMenus(){
+    public List<Menu> pesquisarMenus(){
         return menuService.listar();
     }
 
     @GetMapping("/pesquisarMenu/{id}")
-    public Menus pesquisarMenu(@PathVariable Integer id){
+    public Menu pesquisarMenu(@PathVariable Integer id){
         return menuService.pesquisarMenu(id);
     }
 
     @PutMapping("/alterarMenus")
-    public List<Menus> alterarMenus(@RequestBody List<Menus> listaDeMenus){
+    public List<Menu> alterarMenus(@RequestBody List<Menu> listaDeMenus){
         return menuService.alterarMenus(listaDeMenus);
     }
 
     @PutMapping("/alterarMenus/{id}")
-    public  Menus alterarMenus (@RequestBody Menus Menus, @PathVariable Integer id) {
-        return menuService.alterarMenus(Menus, id);
+    public Menu alterarMenus (@RequestBody Menu Menu, @PathVariable Integer id) {
+        return menuService.alterarMenus(Menu, id);
     }
 
     @DeleteMapping("/deletarMenus/{id}")

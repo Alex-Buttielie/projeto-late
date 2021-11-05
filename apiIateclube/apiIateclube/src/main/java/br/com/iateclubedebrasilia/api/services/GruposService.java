@@ -1,7 +1,7 @@
 package br.com.iateclubedebrasilia.api.services;
 
 
-import br.com.iateclubedebrasilia.api.entitys.Grupos;
+import br.com.iateclubedebrasilia.api.entitys.Grupo;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -9,10 +9,10 @@ import java.util.Map;
 
 public interface GruposService {
 
-    ResponseEntity<Map<String, Grupos>> salvar(Grupos grupo);
-    List<Grupos> listar();
-    List<Grupos> alterarGrupos(List<Grupos> listaDeGrupos);
-    Grupos alterarGrupo(Grupos grupo, Integer id);
-    Grupos pesquisarGrupo(Integer id);
+    ResponseEntity<Map<String, Grupo>> salvar(Grupo grupo);
+    List<Grupo> listar();
+    List<Grupo> alterarGrupos(List<Grupo> listaDeGrupos);
+    Grupo alterarGrupo(Grupo grupo, Integer id);
+    Grupo pesquisarGrupo(Integer id);
     ResponseEntity deletarGrupo(Integer id);
 }

@@ -1,6 +1,6 @@
 package br.com.iateclubedebrasilia.api.controller;
 
-import br.com.iateclubedebrasilia.api.entitys.Permissoes;
+import br.com.iateclubedebrasilia.api.entitys.Permissao;
 import br.com.iateclubedebrasilia.api.services.PermissoesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,28 +24,28 @@ public class PermissoesController {
     private PermissoesService permissoesService;
 
 
-    @PostMapping("/salvarPermissao")
-    public ResponseEntity<Map<String, Permissoes>> salvar(@RequestBody Permissoes permissoes) {
-        return permissoesService.salvar(permissoes);
+    @PostMapping("/salvarGrupo")
+    public ResponseEntity<Map<String, Permissao>> salvar(@RequestBody Permissao permissao) {
+        return permissoesService.salvar(permissao);
     }
 
     @GetMapping("/pesquisarPermissoes")
-    public List<Permissoes> pesquisarPermissoes(){
+    public List<Permissao> pesquisarPermissoes(){
         return permissoesService.listar();
     }
 
     @GetMapping("/pesquisarPermissao/{id}")
-    public Permissoes pesquisarPermissao(@PathVariable Integer id){
+    public Permissao pesquisarPermissao(@PathVariable Integer id){
         return permissoesService.pesquisarPermissao(id);
     }
 
     @PutMapping("/alterarPermissoes")
-    public List<Permissoes> alterarPermissoes(@RequestBody List<Permissoes> listaDePermissoes){
+    public List<Permissao> alterarPermissoes(@RequestBody List<Permissao> listaDePermissoes){
         return permissoesService.alterarPermissoes(listaDePermissoes);
     }
 
     @PutMapping("/alterarPermissao/{id}")
-    public  Permissoes alterarGrupo (@RequestBody Permissoes grupo, @PathVariable Integer id) {
+    public Permissao alterarGrupo (@RequestBody Permissao grupo, @PathVariable Integer id) {
         return permissoesService.alterarPermissao(grupo, id);
     }
 
