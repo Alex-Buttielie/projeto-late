@@ -28,7 +28,8 @@ import java.util.Arrays;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS_POST = {
-            "/usuariosController/**"
+            "/usuariosController/**",
+            "/dependencias/**"
     };
 
     @Autowired

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="JpaBuddyIdeaProjectConfig">
+  <component name="JpaBuddyIdeaProjectConfig" migrateIndexesAndConstraints="false">
     <option name="defaultUnitInitialized" value="true" />
+    <option name="reverseEngineeringLastDbConnectionId" value="4c7eecd3-1045-4b6d-b834-b96f9373315e" />
+    <option name="reLastEntityCreationPackage" value="apiIateclube/apiIateclube/src/main/java/br/com/iateclubedebrasilia/api/entitys" />
   </component>
 </project>
