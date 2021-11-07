@@ -15,9 +15,9 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
-.idea/
+.idea/**
 .jpd
-.jpd/
+.jpd/**
 *.iws
 *.iml
 *.ipr
