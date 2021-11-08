@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -31,6 +30,7 @@ public class Usuario {
     @Column(name = "usu_nome")
     private String usuNome;
 
+    @JsonIgnore
     @Column(name = "usu_senha")
     private String usuSenha;
 
