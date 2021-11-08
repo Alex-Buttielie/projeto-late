@@ -1,4 +1,4 @@
-package br.com.iateclubedebrasilia.api.controller;
+package br.com.iateclubedebrasilia.api.resources;
 
 import br.com.iateclubedebrasilia.api.entitys.Usuario;
 import br.com.iateclubedebrasilia.api.services.UsuariosService;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class UsuariosController {
 
     @Autowired
-    UsuariosService usuariosService;
+    private UsuariosService usuariosService;
 
 
     @PostMapping("/salvarUsuario")
@@ -31,13 +31,12 @@ public class UsuariosController {
 
     @GetMapping("/pesquisarUsuarios")
     public ResponseEntity<List<Usuario>> pesquisarUsuarios(){
-        List<Usuario> listaUsuarios = usuariosService.listar();
-        return ResponseEntity.ok().body(listaUsuarios);
+        return ResponseEntity.ok().body(usuariosService.listar());
     }
 
     @GetMapping("/pesquisarUsuario/{id}")
-    public Usuario pesquisarUsuario(@PathVariable Integer id){
-        return usuariosService.pesquisarUsuario(id);
+    public ResponseEntity pesquisarUsuario(@PathVariable Integer id){
+        return ResponseEntity.ok().body(usuariosService.pesquisarUsuario(id));
     }
 
     @PutMapping("/alterarUsuarios")
@@ -46,8 +45,8 @@ public class UsuariosController {
     }
 
     @PutMapping("/alterarUsuario/{id}")
-    public Usuario alterarUsuario (@RequestBody Usuario Usuario, @PathVariable Integer id) {
-        return usuariosService.alterarUsuario(Usuario, id);
+    public Usuario alterarUsuario (@RequestBody Usuario usuario, @PathVariable Integer id) {
+        return usuariosService.alterarUsuario(usuario, id);
     }
 
     @DeleteMapping("/deletarUsuario/{id}")

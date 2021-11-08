@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ public class Permissao {
 
     @Basic
     @Column(name = "per_dta_hora")
+    @CreationTimestamp
     private LocalDateTime perDtaHora;
 
     @ManyToMany(mappedBy = "permissoesGrupo")

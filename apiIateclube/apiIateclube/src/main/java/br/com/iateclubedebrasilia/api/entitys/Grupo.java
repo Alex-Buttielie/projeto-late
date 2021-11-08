@@ -3,6 +3,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,6 +38,7 @@ public class Grupo {
     private Collection<Permissao> permissoesGrupo;
 
     @Column(name = "grp_dta_hora")
+    @CreationTimestamp
     private LocalDateTime grpDtaHora;
 
     @Column(name = "grp_usu_iden", nullable = false)

@@ -1,7 +1,11 @@
 package br.com.iateclubedebrasilia.api.entitys;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,6 +19,9 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(scope = Usuario.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "usuIden")
 public class Usuario {
 
     @Id
@@ -36,6 +43,7 @@ public class Usuario {
 
     @JsonIgnore
     @Column(name = "usu_dta_hora")
+    @CreationTimestamp
     private LocalDateTime usuDtaHora;
 
     @JsonIgnore
@@ -46,6 +54,7 @@ public class Usuario {
     private Collection<Grupo> gruposUsuario;
 
     @JsonIgnore
+    @JsonFormat
     @ManyToOne
     @JoinColumn(name = "usu_usu_iden", referencedColumnName = "usu_iden")
     private Usuario usuario;
