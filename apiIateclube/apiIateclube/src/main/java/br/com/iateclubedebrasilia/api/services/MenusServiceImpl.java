@@ -1,4 +1,4 @@
-package br.com.iateclubedebrasilia.api.implement;
+package br.com.iateclubedebrasilia.api.services;
 
 import br.com.iateclubedebrasilia.api.entitys.Menu;
 import br.com.iateclubedebrasilia.api.repositorys.MenusRepository;

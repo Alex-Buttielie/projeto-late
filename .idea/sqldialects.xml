@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/apiIateclube/apiIateclube/src/main/resources/db/migration/V20211027194916_0001__Create_USUARIOS_e_GRUPOS_PERMISSOES_e_MENUS.sql" dialect="TSQL" />
-  </component>
-</project>

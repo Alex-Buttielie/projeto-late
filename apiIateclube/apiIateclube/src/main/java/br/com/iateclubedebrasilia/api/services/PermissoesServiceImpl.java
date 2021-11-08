@@ -1,4 +1,4 @@
-package br.com.iateclubedebrasilia.api.implement;
+package br.com.iateclubedebrasilia.api.services;
 
 import br.com.iateclubedebrasilia.api.entitys.Permissao;
 import br.com.iateclubedebrasilia.api.repositorys.PermissoesRepository;
