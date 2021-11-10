@@ -25,7 +25,7 @@ public class AuthService {
 
     public void sendNewPassword(String login) {
 
-        Usuario usuario = usuarioRepository.findByUsuLogin(login);
+        Usuario usuario = usuarioRepository.findByUsuEmail(login);
         if (usuario == null) {
             throw new ObjectNotFoundException("Email não encontrado");
         }

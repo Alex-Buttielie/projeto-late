@@ -48,7 +48,7 @@ public class UsuariosService {
                 .ofNullable(usuarioRepository.findById(id).orElse(null))
                 .map(usuarioConsultado-> {
                     usuarioRepository.delete(usuarioConsultado);
-                    return ResponseEntity.ok("Registro exclu�do");
+                    return ResponseEntity.ok("Registro excluíudo");
                 }).orElseThrow(()-> new NullPointerException("Usuario nao encontrado para exclus�o"));
     }
 

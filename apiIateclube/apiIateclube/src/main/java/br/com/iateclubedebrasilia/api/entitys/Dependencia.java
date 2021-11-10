@@ -38,4 +38,12 @@ public class Dependencia {
     @Column(name = "IC_ATIVO", length = 1)
     private String icAtivo;
 
+    @Column(name = "PERIODO", length = 1)
+    private String perido;
+
+    @Column(name = "MES")
+    private String mes;
+
+    @Column(name = "DIA")
+    private Integer dia;
 }

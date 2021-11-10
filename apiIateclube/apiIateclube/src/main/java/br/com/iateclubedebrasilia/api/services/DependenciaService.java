@@ -1,6 +1,7 @@
 package br.com.iateclubedebrasilia.api.services;
 
 import br.com.iateclubedebrasilia.api.dto.DependenciaDTO;
+import br.com.iateclubedebrasilia.api.enums.Periodo;
 import br.com.iateclubedebrasilia.api.entitys.Dependencia;
 import br.com.iateclubedebrasilia.api.repositorys.DependenciaRepository;
 import br.com.iateclubedebrasilia.api.util.Util;
@@ -45,9 +46,16 @@ public class DependenciaService {
     }
 
     public List<DependenciaDTO> listarPorTipo(String tipoDependencia) {
-        List<Dependencia> listDependencias = Optional
+       /**
+        * ESSE MÉTODO SERÁ USADO QUANDO ESTIVER COM DADOS PERSISTIDOS NO BANDO DE DADOS
+        *
+        * List<Dependencia> listDependencias = Optional
                 .ofNullable(dependenciaRepository.findAllByIcTipoDependenciaOrderBySeqDependencia(tipoDependencia))
-                .orElseThrow(() -> new NullPointerException("Não exitem depencncias deste tipo cadastrados"));
+                .orElseThrow(() -> new NullPointerException("Não exitem depencncias deste tipo cadastrados"));*/
+
+       List<Dependencia> listDependencias = Optional
+               .ofNullable(getListaDeChurrasqueiraTemporario())
+               .orElseThrow(()-> new NullPointerException("Não existem dependencias cadastradas"));
 
         List<DependenciaDTO> dependenciaDTOList = new ArrayList<>();
 
@@ -56,9 +64,21 @@ public class DependenciaService {
                     .id(dep.getSeqDependencia())
                     .descricao(dep.getDescrDependencia())
                     .ativo(dep.getIcAtivo().equals("S") ? true : (dep.getIcAtivo().equals("N") ? false : null))
+                    .periodo(dep.getPerido().equalsIgnoreCase(Periodo.DIURNO.getDescricao()) ? Periodo.DIURNO.getDescricao() : dep.getPerido().equalsIgnoreCase(Periodo.NOTURNO.getDescricao()) ? Periodo.NOTURNO.getDescricao(): null)
+                    .mes(dep.getMes())
+                    .dia(dep.getDia())
                     .build());
         }
+
         return dependenciaDTOList;
+    }
+
+    private List<Dependencia> getListaDeChurrasqueiraTemporario() {
+        Dependencia dependencia = new Dependencia(1, "teste", "S", "teste", "teste", "C", "S", "DIURNO", "JUNHO", 12 );
+
+        List<Dependencia> dependencias = new ArrayList<>();
+        dependencias.add(dependencia);
+        return dependencias;
     }
 
     public Dependencia pesquisarDependencia(Integer id) {

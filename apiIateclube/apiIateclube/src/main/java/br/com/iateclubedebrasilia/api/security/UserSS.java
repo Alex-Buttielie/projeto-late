@@ -15,7 +15,6 @@ public class UserSS implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    private String login;
     private String email;
     private String senha;
     private Collection<? extends GrantedAuthority> authorities;
@@ -23,13 +22,13 @@ public class UserSS implements UserDetails {
     public UserSS() {
     }
 
-    public UserSS(Integer id, String login, String email, String senha, Collection<Grupo> grupos) {
+    public UserSS(Integer id, String email, String senha, Collection<Grupo> grupos) {
         super();
         this.id = id;
-        this.login = login;
         this.email = email;
         this.senha = senha;
-        this.authorities = grupos.stream().map(x -> new SimpleGrantedAuthority(x.getGrpDescricao())).collect(Collectors.toList());
+        this.authorities = grupos.stream().map(x ->
+                new SimpleGrantedAuthority(x.getGrpDescricao())).collect(Collectors.toList());
     }
 
     public Integer getId() {

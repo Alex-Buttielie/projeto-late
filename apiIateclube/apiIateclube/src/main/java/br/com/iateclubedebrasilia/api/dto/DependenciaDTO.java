@@ -13,6 +13,9 @@ public class DependenciaDTO {
 
     private Integer id;
     private String descricao;
-    private boolean ativo;
+    private Boolean ativo;
+    private String periodo;
+    private String mes;
+    private Integer dia;
 
 }
