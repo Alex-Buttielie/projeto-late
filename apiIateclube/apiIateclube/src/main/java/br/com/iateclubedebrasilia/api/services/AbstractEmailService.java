@@ -11,7 +11,6 @@ public class AbstractEmailService implements EmailService{
     @Value("${default.sender}")
     private String sender;
 
-
     @Override
     public void sendEmail(SimpleMailMessage msg) {
 
