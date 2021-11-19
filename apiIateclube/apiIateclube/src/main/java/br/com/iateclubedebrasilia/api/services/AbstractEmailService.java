@@ -12,14 +12,13 @@ public class AbstractEmailService implements EmailService{
     private String sender;
 
     @Override
-    public void sendEmail(SimpleMailMessage msg) {
-
+    public String sendEmail(SimpleMailMessage msg) {
+        return null;
     }
 
-    @Override
-    public void sendNewPasswordEmail(Usuario usuario, String newPass) {
+    public String sendNewPasswordEmail(Usuario usuario, String newPass) {
         SimpleMailMessage sm = prepareNewPasswordEmail(usuario, newPass);
-        sendEmail(sm);
+        return sendEmail(sm);
     }
 
     protected SimpleMailMessage prepareNewPasswordEmail(Usuario usuario, String newPass) {

@@ -3,6 +3,7 @@ package br.com.iateclubedebrasilia.api.services;
 import br.com.iateclubedebrasilia.api.entitys.Usuario;
 import br.com.iateclubedebrasilia.api.repositorys.UsuarioRepository;
 import br.com.iateclubedebrasilia.api.services.exceptions.ObjectNotFoundException;
+import br.com.iateclubedebrasilia.api.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,43 +19,21 @@ public class AuthService {
     @Autowired
     private BCryptPasswordEncoder pe;
 
-    //@Autowired
+    @Autowired
     private EmailService emailService;
 
-    private Random rand = new Random();
-
-    public void sendNewPassword(String login) {
+    public String sendNewPassword(String login) {
 
         Usuario usuario = usuarioRepository.findByUsuEmail(login);
         if (usuario == null) {
             throw new ObjectNotFoundException("Email não encontrado");
         }
 
-        String newPass = newPassword();
+        String newPass = Util.newPassword();
         usuario.setUsuSenha(pe.encode(newPass));
 
-        usuarioRepository.save(usuario);
-        emailService.sendNewPasswordEmail(usuario, newPass);
+        usuario = usuarioRepository.save(usuario);
+        return emailService.sendNewPasswordEmail(usuario, newPass);
     }
 
-    private String newPassword() {
-        char[] vet = new char[10];
-        for (int i=0; i<10; i++) {
-            vet[i] = randomChar();
-        }
-        return new String(vet);
-    }
-
-    private char randomChar() {
-        int opt = rand.nextInt(3);
-        if (opt == 0) { // gera um digito
-            return (char) (rand.nextInt(10) + 48);
-        }
-        else if (opt == 1) { // gera letra maiuscula
-            return (char) (rand.nextInt(26) + 65);
-        }
-        else { // gera letra minuscula
-            return (char) (rand.nextInt(26) + 97);
-        }
-    }
 }
