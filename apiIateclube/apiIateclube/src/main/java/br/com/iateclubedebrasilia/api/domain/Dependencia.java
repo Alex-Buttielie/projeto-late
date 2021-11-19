@@ -1,4 +1,4 @@
-package br.com.iateclubedebrasilia.api.entitys;
+package br.com.iateclubedebrasilia.api.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

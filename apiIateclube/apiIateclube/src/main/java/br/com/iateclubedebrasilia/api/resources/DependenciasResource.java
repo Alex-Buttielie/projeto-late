@@ -19,14 +19,6 @@ public class DependenciasResource {
         this.dependenciaService = dependenciaService;
     }
 
-    /*
-    @GetMapping("/pesquisarUsuarios")
-    public ResponseEntity<List<Usuario>> pesquisarUsuarios(){
-        List<Usuario> listaUsuarios = usuariosService.listar();
-        return ResponseEntity.ok().body(listaUsuarios);
-    }
-    * */
-
     @GetMapping("/listarChurrasqueiras")
     public ResponseEntity<List<DependenciaDTO>> listarChurrasqueiras(){
         List<DependenciaDTO> dependencias = dependenciaService.listarPorTipo("C");
