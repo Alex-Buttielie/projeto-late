@@ -53,7 +53,7 @@ public class Usuario {
             inverseJoinColumns = { @JoinColumn(name = "ugr_grp_iden", referencedColumnName = "grp_iden") })
     private Collection<Grupo> gruposUsuario;
 
-    //@JsonIgnore
+    @JsonIgnore
     @JsonFormat
     @ManyToOne
     @JoinColumn(name = "usu_usu_iden", referencedColumnName = "usu_iden")

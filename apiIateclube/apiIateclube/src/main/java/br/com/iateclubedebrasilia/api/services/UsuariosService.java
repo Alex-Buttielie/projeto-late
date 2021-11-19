@@ -3,9 +3,7 @@ package br.com.iateclubedebrasilia.api.services;
 import br.com.iateclubedebrasilia.api.entitys.Usuario;
 import br.com.iateclubedebrasilia.api.repositorys.UsuarioRepository;
 import br.com.iateclubedebrasilia.api.util.Util;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,10 +14,6 @@ import java.util.Optional;
 @Service
 public class UsuariosService {
 
-
-    @Autowired
-    private BCryptPasswordEncoder pe;
-
     private UsuarioRepository usuarioRepository;
 
     public UsuariosService(UsuarioRepository usuarioRepository) {
@@ -28,26 +22,12 @@ public class UsuariosService {
 
     public ResponseEntity salvar(Usuario usuario) {
         return Optional
-                .ofNullable(definirSenhaUsuarioESalvar(usuario))
+                .ofNullable(usuarioRepository.save(usuario))
                 .map(usuariosalvo ->{
                     Map<String, Usuario> resposta =  new HashMap<>();
                     resposta.put("Registro salvo", usuariosalvo);
                     return  ResponseEntity.ok(resposta);
                 }).orElseThrow(()-> new NullPointerException( "Nao foi possivel realizar o cadastro!"));
-    }
-
-    private Usuario definirSenhaUsuarioESalvar(Usuario usuario) {
-
-        return Optional.ofNullable(usuario)
-                .map(user -> setSenhaSalvaUsuer(user))
-                .orElse(null);
-
-    }
-
-    private Usuario setSenhaSalvaUsuer(Usuario user) {
-        String newPass = Util.newPassword();
-        user.setUsuSenha(pe.encode(newPass));
-        return usuarioRepository.save(user);
     }
 
     public List<Usuario> listar(){
@@ -88,6 +68,4 @@ public class UsuariosService {
                 }).orElseThrow(()-> new NullPointerException("Nao foi possivel realizar a alteracao"));
 
     }
-
-
 }

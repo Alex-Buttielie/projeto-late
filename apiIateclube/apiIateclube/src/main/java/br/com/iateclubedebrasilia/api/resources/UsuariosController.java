@@ -53,6 +53,4 @@ public class UsuariosController {
     public ResponseEntity deletarUsuario(@PathVariable Integer id){
         return usuariosService.deletarUsuario(id);
     }
-
-
 }
