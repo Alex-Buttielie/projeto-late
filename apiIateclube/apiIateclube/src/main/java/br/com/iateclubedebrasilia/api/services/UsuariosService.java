@@ -35,6 +35,7 @@ public class UsuariosService {
                     return  ResponseEntity.ok(resposta);
                 }).orElseThrow(()-> new NullPointerException( "Nao foi possivel realizar o cadastro!"));
     }
+    
 
     private Usuario definirSenhaUsuarioESalvar(Usuario usuario) {
 

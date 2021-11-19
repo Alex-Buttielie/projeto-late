@@ -18,6 +18,7 @@ import java.util.Collection;
 @AllArgsConstructor
 public class Permissao {
 
+
     @Id
     @Column(name = "per_iden")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

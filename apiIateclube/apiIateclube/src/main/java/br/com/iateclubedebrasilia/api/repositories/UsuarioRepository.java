@@ -1,6 +1,6 @@
-package br.com.iateclubedebrasilia.api.repositorys;
+package br.com.iateclubedebrasilia.api.repositories;
 
-import br.com.iateclubedebrasilia.api.entitys.Usuario;
+import br.com.iateclubedebrasilia.api.domain.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,16 +1,17 @@
 package br.com.iateclubedebrasilia.api.services;
 
-import br.com.iateclubedebrasilia.api.security.UserSS;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-public class UserService {
+import br.com.iateclubedebrasilia.api.security.UserSS;
 
-    public static UserSS authenticated() {
-        try {
-            return (UserSS) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }
-        catch (Exception e) {
-            return null;
-        }
-    }
+public class UserService {
+	
+	public static UserSS authenticated() {
+		try {
+			return (UserSS) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
 }

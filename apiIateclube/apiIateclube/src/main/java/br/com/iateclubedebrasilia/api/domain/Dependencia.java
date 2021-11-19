@@ -1,4 +1,4 @@
-package br.com.iateclubedebrasilia.api.entitys;
+package br.com.iateclubedebrasilia.api.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,6 +38,7 @@ public class Dependencia {
     @Column(name = "IC_ATIVO", length = 1)
     private String icAtivo;
 
+
     @Column(name = "PERIODO", length = 1)
     private String perido;
 
@@ -46,4 +47,5 @@ public class Dependencia {
 
     @Column(name = "DIA")
     private Integer dia;
+
 }

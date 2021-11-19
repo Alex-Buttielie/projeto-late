@@ -17,6 +17,7 @@ import java.util.Collection;
 @AllArgsConstructor
 public class Grupo {
 
+
     @Id
     @Column(name = "grp_iden")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

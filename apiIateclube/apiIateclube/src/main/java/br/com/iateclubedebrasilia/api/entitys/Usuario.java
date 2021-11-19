@@ -23,6 +23,7 @@ import java.util.Collection;
         property = "usuIden")
 public class Usuario {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usu_iden")

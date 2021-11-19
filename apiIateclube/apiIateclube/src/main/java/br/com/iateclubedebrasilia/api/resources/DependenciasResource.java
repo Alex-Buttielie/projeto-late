@@ -25,7 +25,6 @@ public class DependenciasResource {
         this.usuariosService = usuariosService;
     }
 
-
     @GetMapping("/pesquisarUsuarios")
     public ResponseEntity<List<Usuario>> pesquisarUsuarios(){
         List<Usuario> listaUsuarios = usuariosService.listar();

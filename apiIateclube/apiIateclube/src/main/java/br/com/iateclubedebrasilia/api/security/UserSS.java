@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.com.iateclubedebrasilia.api.entitys.Grupo;
+import br.com.iateclubedebrasilia.api.domain.enums.Perfil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,13 +22,15 @@ public class UserSS implements UserDetails {
     public UserSS() {
     }
 
-    public UserSS(Integer id, String email, String senha, Collection<Grupo> grupos) {
+
+    public UserSS(Integer id, String email, String senha, Set<Perfil> perfis) {
+
         super();
         this.id = id;
         this.email = email;
         this.senha = senha;
-        this.authorities = grupos.stream().map(x ->
-                new SimpleGrantedAuthority(x.getGrpDescricao())).collect(Collectors.toList());
+        this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
+
     }
 
     public Integer getId() {
@@ -70,7 +72,7 @@ public class UserSS implements UserDetails {
         return true;
     }
 
-    public boolean hasRole(Grupo perfil) {
-        return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getGrpDescricao()));
+    public boolean hasRole(Perfil perfil) {
+        return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
     }
 }

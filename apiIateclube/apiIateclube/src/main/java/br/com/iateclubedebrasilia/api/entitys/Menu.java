@@ -19,6 +19,7 @@ import java.util.Collection;
 @AllArgsConstructor
 public class Menu {
 
+
     @Id
     @Column(name = "men_iden")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

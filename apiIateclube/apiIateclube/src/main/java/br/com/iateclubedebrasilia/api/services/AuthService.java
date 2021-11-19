@@ -1,14 +1,15 @@
 package br.com.iateclubedebrasilia.api.services;
 
-import br.com.iateclubedebrasilia.api.entitys.Usuario;
-import br.com.iateclubedebrasilia.api.repositorys.UsuarioRepository;
+import java.util.Random;
+
 import br.com.iateclubedebrasilia.api.services.exceptions.ObjectNotFoundException;
 import br.com.iateclubedebrasilia.api.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
+import br.com.iateclubedebrasilia.api.domain.Usuario;
+import br.com.iateclubedebrasilia.api.repositories.UsuarioRepository;
 
 @Service
 public class AuthService {
