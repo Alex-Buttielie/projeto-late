@@ -1,9 +1,5 @@
 package br.com.iateclubedebrasilia.api.services;
 
-import br.com.iateclubedebrasilia.api.dto.UsuarioDTO;
-import br.com.iateclubedebrasilia.api.entitys.Grupo;
-import br.com.iateclubedebrasilia.api.entitys.Usuario;
-import br.com.iateclubedebrasilia.api.repositorys.UsuarioRepository;
 import br.com.iateclubedebrasilia.api.security.UserSS;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
-import java.util.List;
 import br.com.iateclubedebrasilia.api.domain.Usuario;
 import br.com.iateclubedebrasilia.api.repositories.UsuarioRepository;
-import br.com.iateclubedebrasilia.api.security.UserSS;
 
 
 @Service

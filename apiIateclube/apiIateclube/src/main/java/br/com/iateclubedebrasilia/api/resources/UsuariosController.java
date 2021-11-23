@@ -1,7 +1,7 @@
 package br.com.iateclubedebrasilia.api.resources;
 
-import br.com.iateclubedebrasilia.api.entitys.Usuario;
-import br.com.iateclubedebrasilia.api.services.UsuariosService;
+import br.com.iateclubedebrasilia.api.domain.Usuario;
+import br.com.iateclubedebrasilia.api.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class UsuariosController {
 
     @Autowired
-    private UsuariosService usuariosService;
+    private UsuarioService usuariosService;
 
 
     @PostMapping("/salvarUsuario")

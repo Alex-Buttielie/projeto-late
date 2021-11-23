@@ -1,11 +1,12 @@
 package br.com.iateclubedebrasilia.api.resources;
 
+import br.com.iateclubedebrasilia.api.domain.Usuario;
 import br.com.iateclubedebrasilia.api.dto.DependenciaDTO;
-import br.com.iateclubedebrasilia.api.entitys.Usuario;
 import br.com.iateclubedebrasilia.api.services.DependenciaService;
-import br.com.iateclubedebrasilia.api.services.UsuariosService;
+import br.com.iateclubedebrasilia.api.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +19,10 @@ public class DependenciasResource {
 
     private DependenciaService dependenciaService;
 
-    private UsuariosService usuariosService;
+    @Autowired
+    private UsuarioService usuariosService;
 
-    public DependenciasResource(DependenciaService dependenciaService, UsuariosService usuariosService) {
+    public DependenciasResource(DependenciaService dependenciaService, UsuarioService usuariosService) {
         this.dependenciaService = dependenciaService;
         this.usuariosService = usuariosService;
     }

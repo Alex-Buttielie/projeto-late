@@ -1,10 +1,9 @@
 package br.com.iateclubedebrasilia.api.services;
 
-import br.com.iateclubedebrasilia.api.entitys.Usuario;
+import br.com.iateclubedebrasilia.api.domain.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,6 +17,7 @@ public class EmailServiceImpl implements EmailService{
 
     public String sendEmail(SimpleMailMessage msg){ return null;}
 
+    @Override
     public String sendNewPasswordEmail(Usuario usuario, String newPass) {
         return sendMail(usuario, newPass);
     }
@@ -26,9 +26,9 @@ public class EmailServiceImpl implements EmailService{
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setSubject("Solicitação de nova senha");
-        message.setText("Olá! Sua nova senha é: " + usuario.getUsuSenha());
-        message.setTo("buttielle3@gmail.com");
-        message.setFrom("buttielle3@gmail.com");
+        message.setText("Olá! Sua nova senha é: " + usuario.getSenha());
+        message.setTo(usuario.getEmail());
+        message.setFrom(usuario.getEmail());
         message.setSentDate(new Date(System.currentTimeMillis()));
 
         try {

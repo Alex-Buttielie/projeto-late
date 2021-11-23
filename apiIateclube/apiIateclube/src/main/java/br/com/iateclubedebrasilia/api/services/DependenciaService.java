@@ -1,9 +1,9 @@
 package br.com.iateclubedebrasilia.api.services;
 
+import br.com.iateclubedebrasilia.api.domain.Dependencia;
 import br.com.iateclubedebrasilia.api.dto.DependenciaDTO;
-import br.com.iateclubedebrasilia.api.enums.Periodo;
-import br.com.iateclubedebrasilia.api.entitys.Dependencia;
-import br.com.iateclubedebrasilia.api.repositorys.DependenciaRepository;
+import br.com.iateclubedebrasilia.api.domain.enums.Periodo;
+import br.com.iateclubedebrasilia.api.repositories.DependenciaRepository;
 import br.com.iateclubedebrasilia.api.util.Util;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

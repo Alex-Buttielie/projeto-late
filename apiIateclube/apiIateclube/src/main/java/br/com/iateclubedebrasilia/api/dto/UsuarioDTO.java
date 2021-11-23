@@ -1,20 +1,22 @@
 package br.com.iateclubedebrasilia.api.dto;
 
 
-import br.com.iateclubedebrasilia.api.entitys.Grupo;
+import br.com.iateclubedebrasilia.api.domain.Grupo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import br.com.iateclubedebrasilia.api.domain.Usuario;
 import br.com.iateclubedebrasilia.api.services.validation.UsuarioUpdate;
 import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.Collection;
 
 @Builder
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @UsuarioUpdate
 public class UsuarioDTO {
@@ -32,8 +34,6 @@ public class UsuarioDTO {
     @Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
     private String nome;
 
-    public UsuarioDTO() {
-    }
 
     public UsuarioDTO(Usuario obj) {
         this.id = obj.getId();

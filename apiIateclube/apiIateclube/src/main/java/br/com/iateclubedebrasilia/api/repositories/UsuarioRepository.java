@@ -9,5 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Transactional(readOnly = true)
-    Usuario findByUsuEmail(String email);
+    Usuario findByEmail(String email);
+
+    @Transactional(readOnly = true)
+    Usuario findUsuarioByEmail(String email);
+
 }

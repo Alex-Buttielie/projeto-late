@@ -2,30 +2,78 @@ package br.com.iateclubedebrasilia.api.domain;
 
 import br.com.iateclubedebrasilia.api.domain.enums.Perfil;
 import br.com.iateclubedebrasilia.api.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+@Table(name = "USUARIOS")
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@JsonIdentityInfo(scope = br.com.iateclubedebrasilia.api.domain.Usuario.class,
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "usuIden")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "usu_iden")
 	private Integer id;
+
+	@Column(name = "usu_login", unique = true)
+	private String login;
+
+	@Column(name = "usu_nome")
 	private String nome;
 	
-	@Column(unique=true)
+	@Column(name = "usu_email", unique=true)
 	private String email;
+
+	@Column(name = "usu_cpf_cnpj", unique=true)
 	private String cpfOuCnpj;
+
+	@Column(name = "usu_tipo")
 	private Integer tipo;
-	
+
 	@JsonIgnore
+	@Column(name = "usu_senha")
 	private String senha;
+
+	@JsonIgnore
+	@Column(name = "usu_dta_hora")
+	@CreationTimestamp
+	private LocalDateTime DtaHora;
+
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "usuarios_grupos",
+			joinColumns = { @JoinColumn(name = "ugr_usu_iden", referencedColumnName = "usu_iden") },
+			inverseJoinColumns = { @JoinColumn(name = "ugr_grp_iden", referencedColumnName = "grp_iden") })
+	private Collection<Grupo> gruposUsuario;
+
+	//@JsonIgnore
+	@JsonFormat
+	@ManyToOne
+	@JoinColumn(name = "usu_usu_iden", referencedColumnName = "usu_iden")
+	private Usuario usuario;
 
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
@@ -50,58 +98,10 @@ public class Usuario implements Serializable {
 		addPerfil(Perfil.CLIENTE);
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getCpfOuCnpj() {
-		return cpfOuCnpj;
-	}
-
-	public void setCpfOuCnpj(String cpfOuCnpj) {
-		this.cpfOuCnpj = cpfOuCnpj;
-	}
-
-	public TipoCliente getTipo() {
-		return TipoCliente.toEnum(tipo);
-	}
-
-	public void setTipo(TipoCliente tipo) {
-		this.tipo = tipo.getCod();
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-	
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-	
 	public Set<Perfil> getPerfis() {
 		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
-	
+
 	public void addPerfil(Perfil perfil) {
 		perfis.add(perfil.getCod());
 	}

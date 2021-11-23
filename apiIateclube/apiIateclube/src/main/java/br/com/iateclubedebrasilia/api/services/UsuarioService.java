@@ -1,14 +1,18 @@
 package br.com.iateclubedebrasilia.api.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import br.com.iateclubedebrasilia.api.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +37,6 @@ public class UsuarioService {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 
-		
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
 	
@@ -118,4 +121,73 @@ public class UsuarioService {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 	}
+
+
+
+
+
+	public ResponseEntity salvar(Usuario usuario) {
+		return Optional
+				.ofNullable(definirSenhaUsuarioESalvar(usuario))
+				.map(usuariosalvo ->{
+					Map<String, Usuario> resposta =  new HashMap<>();
+					resposta.put("Registro salvo", usuariosalvo);
+					return  ResponseEntity.ok(resposta);
+				}).orElseThrow(()-> new NullPointerException( "Nao foi possivel realizar o cadastro!"));
+	}
+
+
+	private Usuario definirSenhaUsuarioESalvar(Usuario usuario) {
+
+		return Optional.ofNullable(usuario)
+				.map(user -> setSenhaSalvaUsuer(user))
+				.orElse(null);
+
+	}
+
+	private Usuario setSenhaSalvaUsuer(Usuario user) {
+		String newPass = Util.newPassword();
+		user.setSenha(pe.encode(newPass));
+		return repo.save(user);
+	}
+
+	public List<Usuario> listar(){
+		return Optional
+				.ofNullable(repo.findAll())
+				.orElseThrow(() -> new NullPointerException("Nao exitem Usuarios cadastrados"));
+	}
+
+	public Usuario pesquisarUsuario(Integer id) {
+		return Optional
+				.ofNullable(id)
+				.map(idConsultado-> repo.findById(idConsultado).orElse(null))
+				.orElseThrow(() -> new NullPointerException("Usuario nao encontrado"));
+	}
+
+	public ResponseEntity deletarUsuario(Integer id) {
+		return Optional
+				.ofNullable(repo.findById(id).orElse(null))
+				.map(usuarioConsultado-> {
+					repo.delete(usuarioConsultado);
+					return ResponseEntity.ok("Registro excluíudo");
+				}).orElseThrow(()-> new NullPointerException("Usuario nao encontrado para exclus�o"));
+	}
+
+	public List<Usuario> alterarUsuarios(List<Usuario> listaDeUsuarios) {
+		return Optional
+				.ofNullable(Util.isListaObjVazia(listaDeUsuarios))
+				.map(listaValidada-> repo.saveAll(listaDeUsuarios))
+				.orElseThrow(()-> new NullPointerException("Informe pelo menos um usuario para ser alterado"));
+	}
+
+	public Usuario alterarUsuario(Usuario usuario, Integer id){
+		return Optional
+				.ofNullable(repo.findById(id).orElse(null))
+				.map(usuarioConsultado-> {
+					usuario.setId(usuarioConsultado.getId());
+					return repo.save(usuario);
+				}).orElseThrow(()-> new NullPointerException("Nao foi possivel realizar a alteracao"));
+
+	}
+
 }

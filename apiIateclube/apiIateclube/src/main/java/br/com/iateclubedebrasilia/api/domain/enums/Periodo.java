@@ -1,4 +1,4 @@
-package br.com.iateclubedebrasilia.api.enums;
+package br.com.iateclubedebrasilia.api.domain.enums;
 
 public enum Periodo {
 
