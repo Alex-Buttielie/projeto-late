@@ -2,6 +2,8 @@ package br.com.iateclubedebrasilia.api.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,7 +47,6 @@ public class ReservaDependencia {
     @Column(name = "CD_MATRICULA")
     private Integer  matricula;
 
-    @Lob
     @Column(name = "SEQ_DEPENDENTE")
     private Integer dependente;
 

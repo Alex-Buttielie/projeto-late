@@ -122,7 +122,7 @@ public class DependenciaService {
 
     }
 
-    public DependenciaDTO reservarChurrasqueira(ReservaDTO reservaDTO) {
+    public ReservaDependencia reservarChurrasqueira(ReservaDTO reservaDTO) {
 
         Dependencia dep = dependenciaRepository.findBySeqDependencia(reservaDTO.getDependencia().getSeqDependencia());
 
@@ -140,12 +140,11 @@ public class DependenciaService {
                 .qtPubPrevisto(reservaDTO.getReserva().getQtPubPrevisto())
                 .build();
 
-        Optional
+        return Optional
                 .ofNullable(reserva)
                 .map(r-> reservaDependenciaRepository.save(r))
                 .orElseThrow(() -> new RuntimeException("Ocorreu algum erro na reserva da churrasqueia"));
 
-        return null;
     }
 
     public List<ReservaDependencia> listarReservas() {
