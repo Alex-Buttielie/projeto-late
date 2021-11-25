@@ -26,7 +26,8 @@ public class EmailServiceImpl implements EmailService{
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setSubject("Solicitação de nova senha");
-        message.setText("Olá! Sua nova senha é: " + usuario.getSenha());
+        //message.setText("Olá! Sua nova senha é: " + usuario.getSenha());
+        message.setText("Olá! Sua nova senha é: " + newPass);
         message.setTo(usuario.getEmail());
         message.setFrom(usuario.getEmail());
         message.setSentDate(new Date(System.currentTimeMillis()));
