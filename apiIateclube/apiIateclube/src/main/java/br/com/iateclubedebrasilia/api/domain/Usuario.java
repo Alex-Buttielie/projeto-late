@@ -36,7 +36,7 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "usu_iden")
-	private Integer id;
+	private Integer usuIden;
 
 	@Column(name = "usu_login", unique = true)
 	private String login;
@@ -89,7 +89,7 @@ public class Usuario implements Serializable {
 
 	public Usuario(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();
-		this.id = id;
+		this.usuIden = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
@@ -118,7 +118,7 @@ public class Usuario implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((usuIden == null) ? 0 : usuIden.hashCode());
 		return result;
 	}
 
@@ -131,10 +131,10 @@ public class Usuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (usuIden == null) {
+			if (other.usuIden != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!usuIden.equals(other.usuIden))
 			return false;
 		return true;
 	}	

@@ -57,13 +57,13 @@ public class UsuarioService {
 	
 	@Transactional
 	public Usuario insert(Usuario obj) {
-		obj.setId(null);
+		obj.setUsuIden(null);
 		obj = repo.save(obj);
 		return obj;
 	}
 	
 	public Usuario update(Usuario obj) {
-		Usuario newObj = find(obj.getId());
+		Usuario newObj = find(obj.getUsuIden());
 		updateData(newObj, obj);
 		return repo.save(newObj);
 	}
@@ -184,7 +184,7 @@ public class UsuarioService {
 		return Optional
 				.ofNullable(repo.findById(id).orElse(null))
 				.map(usuarioConsultado-> {
-					usuario.setId(usuarioConsultado.getId());
+					usuario.setUsuIden(usuarioConsultado.getUsuIden());
 					return repo.save(usuario);
 				}).orElseThrow(()-> new NullPointerException("Nao foi possivel realizar a alteracao"));
 

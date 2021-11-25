@@ -36,7 +36,7 @@ public class UsuarioDTO {
 
 
     public UsuarioDTO(Usuario obj) {
-        this.id = obj.getId();
+        this.id = obj.getUsuIden();
         this.email = obj.getEmail();
         this.nome = obj.getNome();
     }

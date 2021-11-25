@@ -1,10 +1,14 @@
 package br.com.iateclubedebrasilia.api.services;
 
 import br.com.iateclubedebrasilia.api.domain.Dependencia;
+import br.com.iateclubedebrasilia.api.domain.ReservaDependencia;
 import br.com.iateclubedebrasilia.api.dto.DependenciaDTO;
 import br.com.iateclubedebrasilia.api.domain.enums.Periodo;
+import br.com.iateclubedebrasilia.api.dto.ReservaDTO;
 import br.com.iateclubedebrasilia.api.repositories.DependenciaRepository;
+import br.com.iateclubedebrasilia.api.repositories.ReservaDependenciaRepository;
 import br.com.iateclubedebrasilia.api.util.Util;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +17,11 @@ import java.util.*;
 @Service
 public class DependenciaService {
 
+    @Autowired
     private DependenciaRepository dependenciaRepository;
+
+    @Autowired
+    private ReservaDependenciaRepository reservaDependenciaRepository;
 
     public DependenciaService(DependenciaRepository dependenciaRepository) {
         this.dependenciaRepository = dependenciaRepository;
@@ -46,16 +54,16 @@ public class DependenciaService {
     }
 
     public List<DependenciaDTO> listarPorTipo(String tipoDependencia) {
-       /**
-        * ESSE MÉTODO SERÁ USADO QUANDO ESTIVER COM DADOS PERSISTIDOS NO BANDO DE DADOS
-        *
-        * List<Dependencia> listDependencias = Optional
-                .ofNullable(dependenciaRepository.findAllByIcTipoDependenciaOrderBySeqDependencia(tipoDependencia))
-                .orElseThrow(() -> new NullPointerException("Não exitem depencncias deste tipo cadastrados"));*/
+        /**
+         * ESSE MÉTODO SERÁ USADO QUANDO ESTIVER COM DADOS PERSISTIDOS NO BANDO DE DADOS
+         *
+         * List<Dependencia> listDependencias = Optional
+         .ofNullable(dependenciaRepository.findAllByIcTipoDependenciaOrderBySeqDependencia(tipoDependencia))
+         .orElseThrow(() -> new NullPointerException("Não exitem depencncias deste tipo cadastrados"));*/
 
-       List<Dependencia> listDependencias = Optional
-               .ofNullable(getListaDeChurrasqueiraTemporario())
-               .orElseThrow(()-> new NullPointerException("Não existem dependencias cadastradas"));
+        List<Dependencia> listDependencias = Optional
+                .ofNullable(getListaDeChurrasqueiraTemporario())
+                .orElseThrow(()-> new NullPointerException("Não existem dependencias cadastradas"));
 
         List<DependenciaDTO> dependenciaDTOList = new ArrayList<>();
 
@@ -112,5 +120,35 @@ public class DependenciaService {
                     return dependenciaRepository.save(dependencia);
                 }).orElseThrow(() -> new NullPointerException("Não foi possível realizar a alteração"));
 
+    }
+
+    public DependenciaDTO reservarChurrasqueira(ReservaDTO reservaDTO) {
+
+        Dependencia dep = dependenciaRepository.findBySeqDependencia(reservaDTO.getDependencia().getSeqDependencia());
+
+        ReservaDependencia reserva = ReservaDependencia
+                .builder()
+                .dependencia(dep)
+                .dependente(reservaDTO.getUsuario().getUsuIden())
+                .inicioUtilizacao(reservaDTO.getReserva().getInicioUtilizacao())
+                .fimUtilizacao(reservaDTO.getReserva().getFimUtilizacao())
+                .nomeInteressado(reservaDTO.getUsuario().getNome())
+                .userCancelaReserva(reservaDTO.getUsuario())
+                .dtConfirmacao(reservaDTO.getReserva().getDtConfirmacao())
+                .isAtivo("S")
+                .dtLimiteConfirm(reservaDTO.getReserva().getDtLimiteConfirm())
+                .qtPubPrevisto(reservaDTO.getReserva().getQtPubPrevisto())
+                .build();
+
+        Optional
+                .ofNullable(reserva)
+                .map(r-> reservaDependenciaRepository.save(r))
+                .orElseThrow(() -> new RuntimeException("Ocorreu algum erro na reserva da churrasqueia"));
+
+        return null;
+    }
+
+    public List<ReservaDependencia> listarReservas() {
+        return reservaDependenciaRepository.findAll();
     }
 }

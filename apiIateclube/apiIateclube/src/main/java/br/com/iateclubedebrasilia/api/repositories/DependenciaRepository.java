@@ -10,4 +10,5 @@ import java.util.List;
 public interface DependenciaRepository extends JpaRepository<Dependencia, Integer> {
 
     List<Dependencia> findAllByIcTipoDependenciaOrderBySeqDependencia(String tipoDepencia);
+    Dependencia findBySeqDependencia (Integer seqSequencia);
 }

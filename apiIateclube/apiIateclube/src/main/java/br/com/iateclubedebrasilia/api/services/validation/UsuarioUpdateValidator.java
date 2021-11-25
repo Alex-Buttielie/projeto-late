@@ -37,7 +37,7 @@ public class UsuarioUpdateValidator implements ConstraintValidator<UsuarioUpdate
 		List<FieldMessage> list = new ArrayList<>();
 		
 		Usuario aux = repo.findByEmail(objDto.getEmail());
-		if (aux != null && !aux.getId().equals(uriId)) {
+		if (aux != null && !aux.getUsuIden().equals(uriId)) {
 			list.add(new FieldMessage("email", "Email já existente"));
 		}
 
