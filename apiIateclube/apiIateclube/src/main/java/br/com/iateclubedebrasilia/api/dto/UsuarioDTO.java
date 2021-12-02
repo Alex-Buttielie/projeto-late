@@ -1,7 +1,7 @@
 package br.com.iateclubedebrasilia.api.dto;
 
 
-import br.com.iateclubedebrasilia.api.domain.Grupo;
+import br.com.iateclubedebrasilia.api.domain.enums.Perfil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,22 +12,19 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.Collection;
+import java.util.Set;
+
 
 @Builder
 @Data
-//@NoArgsConstructor
 @AllArgsConstructor
 @UsuarioUpdate
 public class UsuarioDTO {
 
     private Integer id;
-    private String login;
-    private String senha;
-    private Collection<Grupo> gruposUsuario;
 
     @NotEmpty(message="Preenchimento obrigatório")
-    @Email(message="Email inválido")
+    @Email(message="E-mail inválido")
     private String email;
 
     @NotEmpty(message="Preenchimento obrigatório")
@@ -39,30 +36,6 @@ public class UsuarioDTO {
         this.id = obj.getUsuIden();
         this.email = obj.getEmail();
         this.nome = obj.getNome();
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import br.com.iateclubedebrasilia.api.domain.enums.Perfil;
 import br.com.iateclubedebrasilia.api.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.iateclubedebrasilia.api.domain.Usuario;
 import br.com.iateclubedebrasilia.api.domain.enums.Perfil;
-import br.com.iateclubedebrasilia.api.domain.enums.TipoCliente;
 import br.com.iateclubedebrasilia.api.dto.UsuarioDTO;
 import br.com.iateclubedebrasilia.api.dto.UsuarioNewDTO;
 import br.com.iateclubedebrasilia.api.repositories.UsuarioRepository;
@@ -58,6 +58,7 @@ public class UsuarioService {
 	@Transactional
 	public Usuario insert(Usuario obj) {
 		obj.setUsuIden(null);
+		obj.setUsuario(find(UserService.authenticated().getId()));
 		obj = repo.save(obj);
 		return obj;
 	}
@@ -102,19 +103,12 @@ public class UsuarioService {
 	}
 	
 	public Usuario fromDTO(UsuarioDTO objDto) {
-		return new Usuario(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null, null);
+		return new Usuario(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
 	}
 	
 	public Usuario fromDTO(UsuarioNewDTO objDto) {
-		Usuario cli = new Usuario(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()), pe.encode(objDto.getSenha()));
-		cli.getTelefones().add(objDto.getTelefone1());
-		if (objDto.getTelefone2()!=null) {
-			cli.getTelefones().add(objDto.getTelefone2());
-		}
-		if (objDto.getTelefone3()!=null) {
-			cli.getTelefones().add(objDto.getTelefone3());
-		}
-		return cli;
+		Usuario usu = new Usuario(null, objDto.getNome(), objDto.getEmail(), objDto.getCpfOuCnpj(), pe.encode(objDto.getSenha()));
+		return usu;
 	}
 	
 	private void updateData(Usuario newObj, Usuario obj) {

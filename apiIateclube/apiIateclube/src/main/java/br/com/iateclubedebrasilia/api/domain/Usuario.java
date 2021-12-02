@@ -1,7 +1,6 @@
 package br.com.iateclubedebrasilia.api.domain;
 
 import br.com.iateclubedebrasilia.api.domain.enums.Perfil;
-import br.com.iateclubedebrasilia.api.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,37 +8,31 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "USUARIOS")
+@Table(name = "USUARIOS", schema = "dbo")
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
-@JsonIdentityInfo(scope = br.com.iateclubedebrasilia.api.domain.Usuario.class,
+/*@JsonIdentityInfo(scope = br.com.iateclubedebrasilia.api.domain.Usuario.class,
 		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "usuIden")
-public class Usuario implements Serializable {
-	private static final long serialVersionUID = 1L;
+		property = "usuIden")*/
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "usu_iden")
 	private Integer usuIden;
-
-	@Column(name = "usu_login", unique = true)
-	private String login;
 
 	@Column(name = "usu_nome")
 	private String nome;
@@ -50,9 +43,6 @@ public class Usuario implements Serializable {
 	@Column(name = "usu_cpf_cnpj", unique=true)
 	private String cpfOuCnpj;
 
-	@Column(name = "usu_tipo")
-	private Integer tipo;
-
 	@JsonIgnore
 	@Column(name = "usu_senha")
 	private String senha;
@@ -60,42 +50,29 @@ public class Usuario implements Serializable {
 	@JsonIgnore
 	@Column(name = "usu_dta_hora")
 	@CreationTimestamp
-	private LocalDateTime DtaHora;
+	private LocalDateTime dtaHora;
 
 	@JsonIgnore
-	@ManyToMany
-	@JoinTable(name = "usuarios_grupos",
-			joinColumns = { @JoinColumn(name = "ugr_usu_iden", referencedColumnName = "usu_iden") },
-			inverseJoinColumns = { @JoinColumn(name = "ugr_grp_iden", referencedColumnName = "grp_iden") })
-	private Collection<Grupo> gruposUsuario;
-
-	//@JsonIgnore
-	@JsonFormat
 	@ManyToOne
 	@JoinColumn(name = "usu_usu_iden", referencedColumnName = "usu_iden")
 	private Usuario usuario;
 
-	@ElementCollection
-	@CollectionTable(name="TELEFONE")
-	private Set<String> telefones = new HashSet<>();
-	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="PERFIS")
 	private Set<Integer> perfis = new HashSet<>();
 	
 	public Usuario() {
-		addPerfil(Perfil.CLIENTE);
+		addPerfil(Perfil.USUARIO);
 	}
 
-	public Usuario(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
+	public Usuario(Integer id, String nome, String email, String cpfOuCnpj, String senha) {
 		super();
 		this.usuIden = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = (tipo==null) ? null : tipo.getCod();
 		this.senha = senha;
-		addPerfil(Perfil.CLIENTE);
+		addPerfil(Perfil.USUARIO);
 	}
 
 	public Set<Perfil> getPerfis() {
@@ -106,13 +83,6 @@ public class Usuario implements Serializable {
 		perfis.add(perfil.getCod());
 	}
 
-	public Set<String> getTelefones() {
-		return telefones;
-	}
-
-	public void setTelefones(Set<String> telefones) {
-		this.telefones = telefones;
-	}
 	
 	@Override
 	public int hashCode() {

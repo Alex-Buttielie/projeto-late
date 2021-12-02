@@ -3,22 +3,33 @@ package br.com.iateclubedebrasilia.api.services;
 import br.com.iateclubedebrasilia.api.domain.Dependencia;
 import br.com.iateclubedebrasilia.api.domain.ReservaDependencia;
 import br.com.iateclubedebrasilia.api.dto.DependenciaDTO;
-import br.com.iateclubedebrasilia.api.domain.enums.Periodo;
 import br.com.iateclubedebrasilia.api.dto.ReservaDTO;
 import br.com.iateclubedebrasilia.api.repositories.DependenciaRepository;
 import br.com.iateclubedebrasilia.api.repositories.ReservaDependenciaRepository;
+import br.com.iateclubedebrasilia.api.repositories.impl.DependenciasRepositoryImpl;
+import br.com.iateclubedebrasilia.api.services.exceptions.ObjectNotFoundException;
+import br.com.iateclubedebrasilia.api.services.exceptions.ValidationException;
 import br.com.iateclubedebrasilia.api.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
 public class DependenciaService {
 
     @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
     private DependenciaRepository dependenciaRepository;
+
+    @Autowired
+    private DependenciasRepositoryImpl dependenciasRepositoryImpl;
 
     @Autowired
     private ReservaDependenciaRepository reservaDependenciaRepository;
@@ -45,9 +56,10 @@ public class DependenciaService {
         for (Dependencia dep : listDependencias) {
 
             dependenciaDTOList.add(DependenciaDTO.builder()
-                    .id(dep.getSeqDependencia())
-                    .descricao(dep.getDescrDependencia())
-                    .ativo(dep.getIcAtivo().equals("S") ? true : (dep.getIcAtivo().equals("N") ? false : null))
+                    .iden(dep.getIden())
+                    .descricao(dep.getDescricao())
+                    .abreviacao(dep.getAbreviacao())
+                    .diurno("")
                     .build());
         }
         return dependenciaDTOList;
@@ -62,31 +74,21 @@ public class DependenciaService {
          .orElseThrow(() -> new NullPointerException("Não exitem depencncias deste tipo cadastrados"));*/
 
         List<Dependencia> listDependencias = Optional
-                .ofNullable(getListaDeChurrasqueiraTemporario())
-                .orElseThrow(()-> new NullPointerException("Não existem dependencias cadastradas"));
+                .ofNullable(new ArrayList<Dependencia>())
+                .orElseThrow(() -> new NullPointerException("Não existem dependencias cadastradas"));
 
         List<DependenciaDTO> dependenciaDTOList = new ArrayList<>();
 
         for (Dependencia dep : listDependencias) {
             dependenciaDTOList.add(DependenciaDTO.builder()
-                    .id(dep.getSeqDependencia())
-                    .descricao(dep.getDescrDependencia())
-                    .ativo(dep.getIcAtivo().equals("S") ? true : (dep.getIcAtivo().equals("N") ? false : null))
-                    .periodo(dep.getPerido().equalsIgnoreCase(Periodo.DIURNO.getDescricao()) ? Periodo.DIURNO.getDescricao() : dep.getPerido().equalsIgnoreCase(Periodo.NOTURNO.getDescricao()) ? Periodo.NOTURNO.getDescricao(): null)
-                    .mes(dep.getMes())
-                    .dia(dep.getDia())
+                    .iden(dep.getIden())
+                    .descricao(dep.getDescricao())
+                    .abreviacao(dep.getAbreviacao())
+                    .diurno("")
                     .build());
         }
 
         return dependenciaDTOList;
-    }
-
-    private List<Dependencia> getListaDeChurrasqueiraTemporario() {
-        Dependencia dependencia = new Dependencia(1, "teste", "S", "teste", "teste", "C", "S", "DIURNO", "JUNHO", 12 );
-
-        List<Dependencia> dependencias = new ArrayList<>();
-        dependencias.add(dependencia);
-        return dependencias;
     }
 
     public Dependencia pesquisarDependencia(Integer id) {
@@ -116,38 +118,88 @@ public class DependenciaService {
         return Optional
                 .ofNullable(dependenciaRepository.findById(id).orElse(null))
                 .map(dependenciaConsultado -> {
-                    dependencia.setSeqDependencia(dependenciaConsultado.getSeqDependencia());
+                    dependencia.setIden(dependenciaConsultado.getIden());
                     return dependenciaRepository.save(dependencia);
                 }).orElseThrow(() -> new NullPointerException("Não foi possível realizar a alteração"));
 
     }
 
-    public ReservaDependencia reservarChurrasqueira(ReservaDTO reservaDTO) {
+    public ReservaDependencia reservar(ReservaDTO reservaDTO) {
 
-        Dependencia dep = dependenciaRepository.findBySeqDependencia(reservaDTO.getDependencia().getSeqDependencia());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
-        ReservaDependencia reserva = ReservaDependencia
+        Dependencia dep = dependenciaRepository.findById(reservaDTO.getDependencia()).get();
+
+        LocalDateTime dataInicio = LocalDateTime.parse(
+                reservaDTO.getDataLocacao() + " " + (reservaDTO.getPeriodo().equals("diurno") ? "09:00:00.000" : "18:00:00.000"), formatter);
+        LocalDateTime dataFim = LocalDateTime.parse(
+                reservaDTO.getDataLocacao() + " " + (reservaDTO.getPeriodo().equals("diurno") ? "18:00:00.000" : "22:00:00.000"), formatter);
+
+        ReservaDependencia consulta = reservaDependenciaRepository.findByDependenciaAndDtaHoraInicio(dep, dataInicio);
+        if (consulta != null){
+            throw new ValidationException("Dependência já reservada para esta data!");
+        }
+
+        ReservaDependencia reservaDependencia = ReservaDependencia
                 .builder()
                 .dependencia(dep)
-                .dependente(reservaDTO.getUsuario().getUsuIden())
-                .inicioUtilizacao(reservaDTO.getReserva().getInicioUtilizacao())
-                .fimUtilizacao(reservaDTO.getReserva().getFimUtilizacao())
-                .nomeInteressado(reservaDTO.getUsuario().getNome())
-                .userCancelaReserva(reservaDTO.getUsuario())
-                .dtConfirmacao(reservaDTO.getReserva().getDtConfirmacao())
-                .isAtivo("S")
-                .dtLimiteConfirm(reservaDTO.getReserva().getDtLimiteConfirm())
-                .qtPubPrevisto(reservaDTO.getReserva().getQtPubPrevisto())
+                .dtaHoraInicio(dataInicio)
+                .dtaHoraFim(dataFim)
+                .dtaHora(LocalDateTime.now())
+                .usuario(usuarioService.find(UserService.authenticated().getId()))
                 .build();
 
         return Optional
-                .ofNullable(reserva)
-                .map(r-> reservaDependenciaRepository.save(r))
+                .ofNullable(reservaDependencia)
+                .map(r -> reservaDependenciaRepository.save(r))
                 .orElseThrow(() -> new RuntimeException("Ocorreu algum erro na reserva da churrasqueia"));
 
     }
 
     public List<ReservaDependencia> listarReservas() {
         return reservaDependenciaRepository.findAll();
+    }
+
+    public List<DependenciaDTO> listarDependencias(String tipo, String dataInicio) {
+
+        switch (tipo){
+            case "churrasqueira":
+                tipo = "C";
+                break;
+            default:
+                tipo = "C";
+                break;
+        }
+
+        LocalDate ldDataInicio;
+        //LocalDate ldDataFim;
+
+        if (dataInicio.isEmpty()){
+            ldDataInicio = LocalDate.now();
+        } else {
+            ldDataInicio = LocalDate.parse(dataInicio);
+        }
+
+        /*if (dataFim.isEmpty()){
+            ldDataFim = ldDataInicio.plusDays(1);
+        } else {
+            ldDataFim = LocalDate.parse(dataFim);
+        }*/
+
+        if (ldDataInicio.isBefore(LocalDate.now())) {
+            throw new ValidationException("Data início menor que data atual");
+        }
+        /*if (ldDataFim.isBefore(LocalDate.now())) {
+            throw new ValidationException("Data fim menor que data atual");
+        }*/
+        /*if (ldDataFim.isBefore(ldDataInicio)) {
+            throw new ValidationException("Data fim menor que data início");
+        }*/
+
+        List<DependenciaDTO> dependenciaDTOList = Optional
+                .ofNullable(dependenciasRepositoryImpl.listarDependencias(tipo, ldDataInicio))
+                .orElseThrow(() -> new ObjectNotFoundException("Não exitem churrasqueiras cadastradas"));
+
+        return dependenciaDTOList;
     }
 }

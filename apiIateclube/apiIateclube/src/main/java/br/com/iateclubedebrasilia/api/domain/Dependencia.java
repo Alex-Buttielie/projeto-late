@@ -1,14 +1,17 @@
 package br.com.iateclubedebrasilia.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "TB_Dependencia")
+@Table(name = "DEPENDENCIAS", schema = "dbo")
 @Builder
 @Data
 @NoArgsConstructor
@@ -16,36 +19,28 @@ import javax.persistence.*;
 public class Dependencia {
 
     @Id
-    @Column(name = "SEQ_DEPENDENCIA", nullable = false)
-    private Integer seqDependencia;
+    @Column(name = "DEP_IDEN", nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer iden;
 
-    @Column(name = "DESCR_DEPENDENCIA", nullable = false, length = 25)
-    private String descrDependencia;
+    @Column(name = "DEP_DESCRICAO", length = 300)
+    private String descricao;
 
-    @Column(name = "MSG_LINHA_OLD")
-    private String msgLinhaOld;
+    @Column(name = "DEP_ABREVIACAO", length = 300)
+    private String abreviacao;
 
-    @Lob
-    @Column(name = "MSG_LINHA")
-    private String msgLinha;
+    @Column(name = "DEP_TIPO_DEPENDENCIA", length = 300)
+    private String tipoDependencia;
 
-    @Column(name = "DE_ABREVIACAO", length = 10)
-    private String deAbreviacao;
+    @Column(name = "DEP_STATUS", length = 1)
+    private String status;
 
-    @Column(name = "IC_TIPO_DEPENDENCIA", length = 1)
-    private String icTipoDependencia;
+    @JsonIgnore
+    @Column(name = "DEP_DTA_HORA")
+    private LocalDateTime dtaHora;
 
-    @Column(name = "IC_ATIVO", length = 1)
-    private String icAtivo;
-
-
-    @Column(name = "PERIODO", length = 1)
-    private String perido;
-
-    @Column(name = "MES")
-    private String mes;
-
-    @Column(name = "DIA")
-    private Integer dia;
+    @ManyToOne
+    @JoinColumn(name = "DEP_USU_IDEN", referencedColumnName = "USU_IDEN")
+    private Usuario usuario;
 
 }

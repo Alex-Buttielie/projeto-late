@@ -28,14 +28,14 @@ import java.util.Arrays;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS_GET = {
-            "/usuariosController/**",
-            "/dependencias/**",
+            /*"/usuariosController/**",
+            "/dependencias/**",*/
             "/auth/**"
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {
-            "/usuariosController/**",
-            "/dependencias/**",
+            /*"/usuariosController/**",
+            "/dependencias/**",*/
             "/auth/**"
     };
 
