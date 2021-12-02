@@ -2,6 +2,7 @@ package br.com.iateclubedebrasilia.api.resources;
 
 import br.com.iateclubedebrasilia.api.domain.Usuario;
 import br.com.iateclubedebrasilia.api.dto.UsuarioDTO;
+import br.com.iateclubedebrasilia.api.dto.UsuarioNewDTO;
 import br.com.iateclubedebrasilia.api.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,7 +36,7 @@ public class UsuarioResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody UsuarioDTO objDto) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody UsuarioNewDTO objDto) {
 		Usuario obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()

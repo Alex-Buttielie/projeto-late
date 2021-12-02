@@ -4,6 +4,7 @@ import br.com.iateclubedebrasilia.api.domain.Usuario;
 import br.com.iateclubedebrasilia.api.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,12 +24,13 @@ public class UsuariosController {
     @Autowired
     private UsuarioService usuariosService;
 
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/salvarUsuario")
     public ResponseEntity<Map<String, Usuario>> salvar(@RequestBody Usuario usuario) {
         return usuariosService.salvar(usuario);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/pesquisarUsuarios")
     public ResponseEntity<List<Usuario>> pesquisarUsuarios(){
         return ResponseEntity.ok().body(usuariosService.listar());
@@ -49,6 +51,7 @@ public class UsuariosController {
         return usuariosService.alterarUsuario(usuario, id);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/deletarUsuario/{id}")
     public ResponseEntity deletarUsuario(@PathVariable Integer id){
         return usuariosService.deletarUsuario(id);

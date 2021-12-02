@@ -2,10 +2,7 @@ package br.com.iateclubedebrasilia.api.resources.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
-import br.com.iateclubedebrasilia.api.services.exceptions.AuthorizationException;
-import br.com.iateclubedebrasilia.api.services.exceptions.DataIntegrityException;
-import br.com.iateclubedebrasilia.api.services.exceptions.FileException;
-import br.com.iateclubedebrasilia.api.services.exceptions.ObjectNotFoundException;
+import br.com.iateclubedebrasilia.api.services.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -52,6 +49,13 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> file(FileException e, HttpServletRequest request) {
 		
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Erro de arquivo", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+
+	@ExceptionHandler(ValidationException.class)
+	public ResponseEntity<StandardError> validationParam(ValidationException e, HttpServletRequest request) {
+
+		ValidationError err = new ValidationError(System.currentTimeMillis(), HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro de validação", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 

@@ -10,12 +10,13 @@ import javax.validation.ConstraintValidatorContext;
 
 import br.com.iateclubedebrasilia.api.domain.Usuario;
 import br.com.iateclubedebrasilia.api.dto.UsuarioDTO;
+import br.com.iateclubedebrasilia.api.dto.UsuarioNewDTO;
 import br.com.iateclubedebrasilia.api.repositories.UsuarioRepository;
 import br.com.iateclubedebrasilia.api.resources.exception.FieldMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
-public class UsuarioUpdateValidator implements ConstraintValidator<UsuarioUpdate, UsuarioDTO> {
+public class UsuarioUpdateValidator implements ConstraintValidator<UsuarioUpdate, UsuarioNewDTO> {
 
 	@Autowired
 	private HttpServletRequest request;
@@ -28,11 +29,14 @@ public class UsuarioUpdateValidator implements ConstraintValidator<UsuarioUpdate
 	}
 
 	@Override
-	public boolean isValid(UsuarioDTO objDto, ConstraintValidatorContext context) {
+	public boolean isValid(UsuarioNewDTO objDto, ConstraintValidatorContext context) {
 		
 		@SuppressWarnings("unchecked")
 		Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-		Integer uriId = Integer.parseInt(map.get("id"));
+		Integer uriId = 0;
+		if (map.size() != 0){
+			uriId = Integer.parseInt(map.get("id"));
+		}
 		
 		List<FieldMessage> list = new ArrayList<>();
 		

@@ -11,11 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DependenciaDTO {
 
-    private Integer id;
+    private int iden;
+    private String abreviacao;
     private String descricao;
-    private Boolean ativo;
-    private String periodo;
-    private String mes;
-    private Integer dia;
+    private String diurno;
+    private String noturno;
 
 }
