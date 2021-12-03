@@ -131,9 +131,11 @@ public class DependenciaService {
         Dependencia dep = dependenciaRepository.findById(reservaDTO.getDependencia()).get();
 
         LocalDateTime dataInicio = LocalDateTime.parse(
-                reservaDTO.getDataLocacao() + " " + (reservaDTO.getPeriodo().equals("diurno") ? "09:00:00.000" : "18:00:00.000"), formatter);
+                reservaDTO.getDataLocacao() + " "
+                        + (reservaDTO.getPeriodo().equals("diurno") ? "09:00:00.000" : "18:00:00.000"), formatter);
         LocalDateTime dataFim = LocalDateTime.parse(
-                reservaDTO.getDataLocacao() + " " + (reservaDTO.getPeriodo().equals("diurno") ? "18:00:00.000" : "22:00:00.000"), formatter);
+                reservaDTO.getDataLocacao() + " "
+                        + (reservaDTO.getPeriodo().equals("diurno") ? "18:00:00.000" : "22:00:00.000"), formatter);
 
         ReservaDependencia consulta = reservaDependenciaRepository.findByDependenciaAndDtaHoraInicio(dep, dataInicio);
         if (consulta != null){
@@ -172,7 +174,6 @@ public class DependenciaService {
         }
 
         LocalDate ldDataInicio;
-        //LocalDate ldDataFim;
 
         if (dataInicio.isEmpty()){
             ldDataInicio = LocalDate.now();
@@ -180,21 +181,9 @@ public class DependenciaService {
             ldDataInicio = LocalDate.parse(dataInicio);
         }
 
-        /*if (dataFim.isEmpty()){
-            ldDataFim = ldDataInicio.plusDays(1);
-        } else {
-            ldDataFim = LocalDate.parse(dataFim);
-        }*/
-
         if (ldDataInicio.isBefore(LocalDate.now())) {
             throw new ValidationException("Data início menor que data atual");
         }
-        /*if (ldDataFim.isBefore(LocalDate.now())) {
-            throw new ValidationException("Data fim menor que data atual");
-        }*/
-        /*if (ldDataFim.isBefore(ldDataInicio)) {
-            throw new ValidationException("Data fim menor que data início");
-        }*/
 
         List<DependenciaDTO> dependenciaDTOList = Optional
                 .ofNullable(dependenciasRepositoryImpl.listarDependencias(tipo, ldDataInicio))
