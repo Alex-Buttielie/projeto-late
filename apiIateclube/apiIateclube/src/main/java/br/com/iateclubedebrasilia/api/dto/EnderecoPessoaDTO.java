@@ -1,5 +1,6 @@
 package br.com.iateclubedebrasilia.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -30,12 +31,16 @@ public class EnderecoPessoaDTO {
 
     private String uf;
 
+    @JsonIgnore
     private Boolean status;
 
+    @JsonIgnore
     private LocalDateTime dtaHora;
 
+    @JsonIgnore
     private PessoaDTO pessoa;
 
+    @JsonIgnore
     private Integer usuario;
 
 }

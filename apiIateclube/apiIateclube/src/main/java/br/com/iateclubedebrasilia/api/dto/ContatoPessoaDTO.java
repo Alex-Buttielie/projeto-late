@@ -1,5 +1,6 @@
 package br.com.iateclubedebrasilia.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.sql.Date;
@@ -26,12 +27,16 @@ public class ContatoPessoaDTO {
 
     private Date dtaFim;
 
+    @JsonIgnore
     private Boolean status;
 
+    @JsonIgnore
     private LocalDateTime dtaHora;
 
-    //private PessoaDTO pessoa;
+    @JsonIgnore
+    private PessoaDTO pessoa;
 
+    @JsonIgnore
     private Integer usuario;
 
 }
