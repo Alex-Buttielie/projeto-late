@@ -23,8 +23,10 @@ public class ContatoPessoaDTO {
 
     private String observacao;
 
+    @JsonIgnore
     private LocalDate dtaIni;
 
+    @JsonIgnore
     private Date dtaFim;
 
     @JsonIgnore

@@ -45,7 +45,7 @@ public class PessoaService {
 
         Pessoa pessoa = pessoaRepository.findById(UserService.authenticated().getId()).orElse(null);
 
-        if (pessoa == null){
+        if (pessoa == null) {
             entity.setIden(UserService.authenticated().getId());
         }
 
@@ -115,6 +115,7 @@ public class PessoaService {
             end.setPessoa(entity);
             end.setDtaHora(LocalDateTime.now());
             end.setUsuario(entity.getUsuario());
+            end.setStatus(true);
 
             entity.setEnderecosPessoa(Arrays.asList(end));
         }
@@ -128,14 +129,12 @@ public class PessoaService {
         try {
             pessoaSalva = pessoaRepository.save(entity);
         } catch (ConstraintViolationException e) {
-            if (e.getMessage().contains("CPF")){
+            if (e.getMessage().contains("CPF")) {
                 throw new ValidationException("Erro ao salvar sócio, CPF inválido!");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //pessoaSalva = pessoaRepository.save(entity);
-
 
         return pessoaSalva;
 
@@ -143,30 +142,39 @@ public class PessoaService {
     }
 
     public PessoaDTO buscarPorId(Integer id) {
-        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
+
+        Pessoa pessoa = Optional
+                .ofNullable(id)
+                .map(idConsultado -> pessoaRepository.findById(id).orElse(null))
+                .orElseThrow(() -> new ValidationException("Usuário sem cadastro!"));
 
 
-        PessoaFisica pessoaFisica = pessoaFisicaService.procurarPorPessoa(pessoa.get());
-        PessoaJuridica pessoaJuridica = pessoaJuridicaService.procurarPorPessoa(pessoa.get());
-        List<ContatoPessoa> contatosPessoas = contatoPessoaService.procurarPorPessoa(pessoa.get());
-        EnderecoPessoa enderecoPessoa = enderecoPessoaService.procurarPorPessoa(pessoa.get());
+        PessoaFisica pessoaFisica = pessoaFisicaService.procurarPorPessoa(pessoa);
+        PessoaJuridica pessoaJuridica = pessoaJuridicaService.procurarPorPessoa(pessoa);
+        List<ContatoPessoa> contatosPessoas = contatoPessoaService.procurarPorPessoa(pessoa);
+        EnderecoPessoa enderecoPessoa = enderecoPessoaService.procurarPorPessoa(pessoa);
+
+        List<ContatoPessoaDTO> contatos = new ArrayList<>();
+        if (contatosPessoas.size() != 0) {
+            for (ContatoPessoa cont : contatosPessoas) {
+                ContatoPessoaDTO contatoPessoaDTO = DozerConverter.parseObject(cont, ContatoPessoaDTO.class);
+                contatos.add(contatoPessoaDTO);
+            }
+
+        }
 
 
         return PessoaDTO.builder()
-                .nomeSoc(pessoa.get().getNomeSoc())
-                .nomeReg(pessoa.get().getNomeReg())
-                .iden(pessoa.get().getIden())
+                .nomeSoc(pessoa.getNomeSoc())
+                .nomeReg(pessoa.getNomeReg())
+                .iden(pessoa.getIden())
                 .pessoaFisica(pessoaFisica != null ? DozerConverter
-                        .parseObject(pessoaFisica, PessoaFisicaDTO.class) : new PessoaFisicaDTO())
-                .pessoaJuridica(DozerConverter
-                        .parseObject(pessoaJuridica != null ? pessoaJuridica : new PessoaJuridicaDTO(),
-                                PessoaJuridicaDTO.class))
-                .contatosPessoa(DozerConverter
-                        .parseListObjects(contatosPessoas.size() != 0 ? contatosPessoas : new ArrayList<>(),
-                                ContatoPessoaDTO.class))
-                .enderecoPessoa(DozerConverter
-                        .parseObject(enderecoPessoa != null ? enderecoPessoa : new EnderecoPessoaDTO(),
-                                EnderecoPessoaDTO.class))
+                        .parseObject(pessoaFisica, PessoaFisicaDTO.class) : null)
+                .pessoaJuridica(pessoaJuridica != null ? DozerConverter
+                        .parseObject(pessoaJuridica, PessoaJuridicaDTO.class) : null)
+                .contatosPessoa(contatosPessoas.size() != 0 ? contatos : null)
+                .enderecoPessoa(enderecoPessoa != null ? DozerConverter
+                        .parseObject(enderecoPessoa, EnderecoPessoaDTO.class) : null)
                 .build();
     }
 

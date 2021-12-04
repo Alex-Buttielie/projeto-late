@@ -18,9 +18,11 @@ public class PessoaDTO {
 
     private String nomeSoc;
 
-    //private Collection<AgrupamentoPessoaDTO> agrupamentosPessoasOrigem;
+    @JsonIgnore
+    private Collection<AgrupamentoPessoaDTO> agrupamentosPessoasOrigem;
 
-    //private Collection<AgrupamentoPessoaDTO> agrupamentosPessoas;
+    @JsonIgnore
+    private Collection<AgrupamentoPessoaDTO> agrupamentosPessoas;
 
     private Collection<ContatoPessoaDTO> contatosPessoa;
 
